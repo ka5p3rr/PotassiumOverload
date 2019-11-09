@@ -83,20 +83,25 @@ Another very useful feature of GitKraken is in the left panel, where you can see
 
 ## 3 Git Branching Strategy
 
-We have 3 branches called: Production, Development and Local designated branches (can be either Feature or Bugfix).
+We have 4 branch tiers called: Production, Development, Epics and Local designated branches (can be either Feature or Bugfix).
 
 1. Production (called `prod`)
    - Fully reviewed code, released current version of the product
    - Updated via Pull Request from Development requiring 5 reviewers
-     - Additionally this will include FTRs
+     - Additionally this will include an FTR
 
 2. Development (called `dev`)
    - Current stable version
-   - Updated via Pull Request from Local designated branches requiring 2 reviewers
+   - Updated via Pull Request from Epic requiring FTR meeting
 
-3. Local designated branches (called `feature/xxxx` or `bugfix/xxxx`)
+3. Epics (called `epic/xxxx`)
+   - Feature based, composed of multiple Local designated branches
+   - Updated via Pull Request from Local designated branches requiring 2 reviewer
+
+4. Local designated branches (called `component/xxxx` or `bugfix/xxxx`)
    - Variable in purpose
    - Updated via commits
+   - Comprise of the smallest possible component implementation related to the feature
 
 ## 4 Coding standards
 
@@ -120,10 +125,11 @@ Those settings can’t completely mimic the format enforced by the Google Style 
 
 In this chapter we define our custom versioning convention.
 
-Our product version comprises of two number separated by dot - `x.y`, where `x` is major and `y` is minor change. These have no limit. These are specified inside the `build.gradle` file and has to updated manually in the following way:
+Our product version comprises of two number separated by dot - `x.y.z`, where `x` is major, `y` is minor, and `z` is patch. These have no numerical limit. These are specified inside the `build.gradle` file and has to updated manually in the following way:
 
-- When merging into `prod` major should be increased by 1 and minor reset back to 0
-- When merging into `dev`major stays the same and minor increases by 1 relative to the current minor version
+- When merging into `prod` major should be increased by 1 and minor and patch should be reset back to 0
+- When merging into `dev` major stays the same, minor increases by 1 relative to the current minor version, and patch is reset to 0
+- When merging into `epics` major and minor stay the same, and patch increase by 1 relative to the current patch version
 
 ## 6 Instructions for PR reviewers
 
