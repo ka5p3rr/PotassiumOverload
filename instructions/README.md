@@ -14,7 +14,7 @@
   - [3.1 IntelliJ setup](#31-intellij-setup)
 - [4 Git Branching Strategy](#4-git-branching-strategy)
 - [5 Versioning](#5-versioning)
-- [7 Instructions for PR reviewers](#7-instructions-for-pr-reviewers)
+- [6 Instructions for PR reviewers](#6-instructions-for-pr-reviewers)
 
 ## 1 Introduction
 
@@ -136,7 +136,7 @@ Our product version comprises of two number separated by dot - `x.y.z`, where `x
 - When merging into `dev` major stays the same, minor increases by 1 relative to the current minor version, and patch is reset to 0
 - When merging into `epics` major and minor stay the same, and patch increase by 1 relative to the current patch version
 
-## 7 Instructions for PR reviewers
+## 6 Instructions for PR reviewers
 
 If you are added as a reviewer ensure the following:
 
