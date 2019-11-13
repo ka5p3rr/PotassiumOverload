@@ -3,43 +3,48 @@
 ## Table of contents <!-- omit in toc -->
 
 - [1 Introduction](#1-introduction)
-  - [1.1 Git](#11-git)
-- [2 GitKraken](#2-gitkraken)
-  - [2.1 Set up](#21-set-up)
-  - [2.2 Basics](#22-basics)
-  - [2.3 Branching](#23-branching)
-- [3 Git Branching Strategy](#3-git-branching-strategy)
-- [4 Coding standards](#4-coding-standards)
-  - [4.1 IntelliJ setup](#41-intellij-setup)
+- [2 Project Setup](#2-project-setup)
+  - [2.1 Software Requirements](#21-software-requirements)
+  - [2.2 Development Environment Setup](#22-development-environment-setup)
+  - [2.3 GitKraken](#23-gitkraken)
+    - [2.3.1 Set up](#231-set-up)
+    - [2.3.2 Basics](#232-basics)
+    - [2.3.3 Branching](#233-branching)
+- [3 Coding standards](#3-coding-standards)
+  - [3.1 IntelliJ setup](#31-intellij-setup)
+- [4 Git Branching Strategy](#4-git-branching-strategy)
 - [5 Versioning](#5-versioning)
-- [6 Instructions for PR reviewers](#6-instructions-for-pr-reviewers)
+- [7 Instructions for PR reviewers](#7-instructions-for-pr-reviewers)
 
 ## 1 Introduction
 
 Written by [David Mares](https://github.com/ka5p3rr) the SQA Manager in collaboration with the team leader [Andrea Cerasoni](https://github.com/acerasoni).
 
-This document is created to set standard and conventions for coding, custom git workflow, and also introduce you to GitKraken. Please follow the instructions carefully.
+First chapter of this document explains how to setup your development environment. Second part sets the standard and conventions to be followed by the project contributors. It specifically focuses on coding, VCS practices and our custom workflow.
 
-### 1.1 Git
+Please follow the instructions carefully.
 
-Make sure you have the current version of git installed on your machine.
+## 2 Project Setup
 
-If you don't have git installed just go to this [website](https://git-scm.com/). Download it and follow the install instruction. I recommend using the default settings if you are unsure about the functionality.
+### 2.1 Software Requirements
 
-First of all there are three main options how to use git:
+To ensure compatibility and easy start we recommend using IntelliJ IDEA as your IDE and Java 8. Download the current versions of the following tools:
 
-1. CLI (Command Line Interface)
-2. IDE
-3. Git GUI client
-    - there are many [options](https://git-scm.com/downloads/guis/)
+- [IntelliJ IDEA](https://www.jetbrains.com/idea/)
+  - if you are unfamiliar with this tool refer to [help guide](https://www.jetbrains.com/help/idea/installation-guide.html)
+- [Java 8 JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- [git](https://git-scm.com/)
 
-You can use your IDE git features or command line, but I do recommend using GitKraken (the only reason for this is consistency and standardised commenting).
+### 2.2 Development Environment Setup
 
-## 2 GitKraken
+1. `git clone` the repository
+2. Open IntelliJ -> "Import Project" -> /src/build.gradle
+
+### 2.3 GitKraken
 
 We get a free GitKraken PRO license from GitHub Student Developer Pack. If you haven't signed up already go to [Student Developer Pack - GitHub Education](https://education.github.com/pack). Click Join GitHub Education in the top right corner and follow the instructions. GitKraken is a great git tool as it provides user-friendly GUI and functionality for local and remote branching, commit messages, merging, pull requests and much more.
 
-### 2.1 Set up
+#### 2.3.1 Set up
 
 Download [GitKraken](https://www.gitkraken.com/download) and install it. Once the installation is done you are asked to sign in. Just click the Sign in with GitHub account button and connect your GitHub account with GitKraken. Next step is to set up your local git profile. In the Profile set up dialog leave your Profile Name as default and set your Name (should be loaded automatically). Email setup is a little bit more complicated. It is important to check what your GitHub email is, because you might have set your email as private and GitHub generated a special email address for you to use. Please log in to GitHub and go to settings, under Emails look for Keep my email address private. If the box is checked then you have set your email to be private and you need to use the generated one, which will be specified bellow (`xxxxxx@users.noreply.github.com`). Copy the email address and paste it to the GitKraken email field. Otherwise, if you have not set your email as private just use your Primary profile email address. Save the changes.
 
@@ -55,7 +60,7 @@ Now you can close the Git Bash and open up GitKraken again. In the top left corn
 
 That is basically it as far as the initial setup goes.
 
-### 2.2 Basics
+#### 2.3.2 Basics
 
 GitKraken is really easy to use, in the middle you see a visual representation of the current remote and local branches and also individual commits with their authors. You can click on each commit and see what files have been changed, who made the changes etc. When you make a change locally on your machine, you can view it by clicking the very first line in the middle section (the one with the empty circle). Or there will be a little bar in the top right corner saying View changes. On the right you should now see a new section. The top part shows you all the changes (file changes, renaming, deletions etc.) that you have made. To upload your changes to our GitHub repository you need to follow these steps:
 
@@ -77,11 +82,29 @@ GitKraken is really easy to use, in the middle you see a visual representation o
 2. Push
     - push will upload all your commits to our remote repository
 
-### 2.3 Branching
+#### 2.3.3 Branching
 
 Another very useful feature of GitKraken is in the left panel, where you can see all the remote branches of the GitHub repository and also your local personal branches. There is also a functionality that allows us to create Pull Requests directly from GitKraken.
 
-## 3 Git Branching Strategy
+## 3 Coding standards
+
+We will be following the Google Style Guides as our coding standards. Specifically we will be coding in Java and use the standards described [here](https://google.github.io/styleguide/javaguide.html).
+
+### 3.1 IntelliJ setup
+
+Download the [google-java-format](https://plugins.jetbrains.com/plugin/8527-google-java-format) plugin. To trigger the plugin in IntelliJ go to *Code -> Reformat Code*. I also recommended to set the code style settings which help to create properly formatted code as-you-go.
+
+1. Download [intellij-java-google-style.xml](https://raw.githubusercontent.com/google/styleguide/gh-pages/intellij-java-google-style.xml).
+
+2. Go to *File -> Settings -> Editor -> Code Style*.
+
+3. Click on the wrench icon and import the downloaded file.
+
+4. Make sure that GoogleStyle is chosen as the current Scheme.
+
+Those settings can’t completely mimic the format enforced by the Google Style Guides. So before submitting code, please make sure to run *Reformat Code* and follow the standards as close as possible.
+
+## 4 Git Branching Strategy
 
 We have 4 branch tiers called: Production, Development, Epics and Local designated branches (can be either Feature or Bugfix).
 
@@ -103,24 +126,6 @@ We have 4 branch tiers called: Production, Development, Epics and Local designat
    - Updated via commits
    - Comprise of the smallest possible component implementation related to the feature
 
-## 4 Coding standards
-
-We will be following the Google Style Guides as our coding standards. Specifically we will be coding in Java and use the standards described [here](https://google.github.io/styleguide/javaguide.html).
-
-### 4.1 IntelliJ setup
-
-Download the [google-java-format](https://plugins.jetbrains.com/plugin/8527-google-java-format) plugin. To trigger the plugin in IntelliJ go to *Code -> Reformat Code*. I also recommended to set the code style settings which help to create properly formatted code as-you-go.
-
-1. Download [intellij-java-google-style.xml](https://raw.githubusercontent.com/google/styleguide/gh-pages/intellij-java-google-style.xml).
-
-2. Go to *File -> Settings -> Editor -> Code Style*.
-
-3. Click on the wrench icon and import the downloaded file.
-
-4. Make sure that GoogleStyle is chosen as the current Scheme.
-
-Those settings can’t completely mimic the format enforced by the Google Style Guides. So before submitting code, please make sure to run *Reformat Code* and follow the standards as close as possible.
-
 ## 5 Versioning
 
 In this chapter we define our custom versioning convention.
@@ -131,7 +136,7 @@ Our product version comprises of two number separated by dot - `x.y.z`, where `x
 - When merging into `dev` major stays the same, minor increases by 1 relative to the current minor version, and patch is reset to 0
 - When merging into `epics` major and minor stay the same, and patch increase by 1 relative to the current patch version
 
-## 6 Instructions for PR reviewers
+## 7 Instructions for PR reviewers
 
 If you are added as a reviewer ensure the following:
 
