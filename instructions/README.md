@@ -130,7 +130,7 @@ We have 4 branch tiers called: Production, Development, Epics and Local designat
 
 In this chapter we define our custom versioning convention.
 
-Our product version comprises of two number separated by dot - `x.y.z`, where `x` is major, `y` is minor, and `z` is patch. These have no numerical limit. These are specified inside the `build.gradle` file and has to updated manually in the following way:
+Our product version comprises of three numbers separated by dots - `x.y.z`, where `x` is major, `y` is minor, and `z` is patch. These have no numerical limit. The version is specified in the `build.gradle` file and has to updated manually as follows:
 
 - When merging into `prod` major should be increased by 1 and minor and patch should be reset back to 0
 - When merging into `dev` major stays the same, minor increases by 1 relative to the current minor version, and patch is reset to 0
