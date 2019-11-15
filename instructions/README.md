@@ -119,7 +119,7 @@ We have 4 branch tiers called: Production, Development, Epics and Local designat
 
 3. Epics (called `epic/xxxx`)
    - Feature based, composed of multiple Local designated branches
-   - Updated via Pull Request from Local designated branches requiring 2 reviewer
+   - Updated via Pull Request from Local designated branches requiring 2 reviewers
 
 4. Local designated branches (called `component/xxxx` or `bugfix/xxxx`)
    - Variable in purpose
