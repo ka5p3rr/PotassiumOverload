@@ -1,0 +1,13 @@
+language: java
+install: true
+
+os: linux
+dist: trusty
+jdk: oraclejdk8
+
+before_script:
+    - cd src
+    - chmod +x gradlew
+
+script:
+    - ./gradlew clean tests:test
