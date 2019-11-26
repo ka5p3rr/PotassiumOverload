@@ -2,6 +2,14 @@
 
 We are CUCU Bananas®, new agile progressive team at UoN building the most epic game of all time based on Bagley's real life story.
 
+## Team
+- Andrea
+- David
+- Aidan
+- Fran
+- Alex
+
+
 ## Links
 
 - [Version Control Repository on Github](https://github.com/ka5p3rr/PotassiumOverload)
