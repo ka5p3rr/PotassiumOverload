@@ -1,4 +1,4 @@
-![Potassium Overload Temporal Logo](https://i.imgur.com/TsOll4Y.png "Potassium Overload")
+# ![Potassium Overload Temporal Logo](https://i.imgur.com/TsOll4Y.png "Potassium Overload")
 
 We are CUCU Bananas, a software development team creating a game following our own process called EDD (Epic Driven Development).
 

@@ -17,3 +17,4 @@ before_script:
 
 script:
     - ./gradlew clean tests:test
+    - ./gradlew sonarqube
