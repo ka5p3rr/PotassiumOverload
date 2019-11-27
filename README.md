@@ -2,7 +2,7 @@
 
 We are CUCU Bananas, a software development team creating a game following our own process called EDD (Epic Driven Development).
 
-[![Build Status](https://travis-ci.com/ka5p3rr/PotassiumOverload.svg?token=6zqbGiC8Zj7buATvxizS&branch=prod)](https://travis-ci.com/ka5p3rr/PotassiumOverload) [![CodeFactor](https://www.codefactor.io/repository/github/ka5p3rr/potassiumoverload/badge)](https://www.codefactor.io/repository/github/ka5p3rr/potassiumoverload)
+[![Build Status](https://travis-ci.com/ka5p3rr/PotassiumOverload.svg?token=6zqbGiC8Zj7buATvxizS&branch=prod)](https://travis-ci.com/ka5p3rr/PotassiumOverload) [![CodeFactor](https://www.codefactor.io/repository/github/ka5p3rr/potassiumoverload/badge)](https://www.codefactor.io/repository/github/ka5p3rr/potassiumoverload) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ka5p3rr_PotassiumOverload&metric=alert_status)](https://sonarcloud.io/dashboard?id=ka5p3rr_PotassiumOverload)
 
 ## Team
 
