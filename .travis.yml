@@ -1,6 +1,12 @@
 language: java
 install: true
 
+addons:
+  sonarcloud:
+    organization: "ka5p3rr"
+    token:
+      secure: $SONAR_CLOUD_KEY
+
 os: linux
 dist: trusty
 jdk: oraclejdk8

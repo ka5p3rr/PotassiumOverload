@@ -1,6 +1,4 @@
 buildscript {
-    
-
     repositories {
         mavenLocal()
         mavenCentral()
@@ -9,13 +7,17 @@ buildscript {
         jcenter()
         google()
     }
-    dependencies {
-        
 
+    dependencies {
     }
 }
 
+plugins {
+    id "org.sonarqube" version "2.8"
+}
+
 allprojects {
+    apply plugin: "org.sonarqube"
 
     version = '1.0'
     ext {
@@ -34,6 +36,14 @@ allprojects {
         google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    }
+
+    sonarqube {
+        properties {
+            property "sonar.projectKey", "ka5p3rr_SQAtest"
+            property "sonar.test.inclusions","tests"
+            property "sonar.exclusions", "tests"
+        }
     }
 }
 
