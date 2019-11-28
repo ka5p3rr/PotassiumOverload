@@ -19,7 +19,7 @@ plugins {
 allprojects {
     apply plugin: "org.sonarqube"
 
-    version = '1.0'
+    version = '0.0.1'
     ext {
         appName = "potassium-overload"
         gdxVersion = '1.9.10'
