@@ -7,6 +7,7 @@ import com.cucubananas.core.PotassiumOverload;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.forceExit = false;
 		new LwjglApplication(new PotassiumOverload(), config);
 	}
 }
