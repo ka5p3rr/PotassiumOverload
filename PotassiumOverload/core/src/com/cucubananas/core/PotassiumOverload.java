@@ -6,6 +6,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.cucubananas.core.actor.Enemy;
+import com.cucubananas.core.actor.Player;
 
 public class PotassiumOverload extends ApplicationAdapter {
     SpriteBatch batch;
@@ -52,4 +55,5 @@ public class PotassiumOverload extends ApplicationAdapter {
         batch.dispose();
         img.dispose();
     }
+
 }
