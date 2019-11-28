@@ -12,7 +12,7 @@ dist: trusty
 jdk: oraclejdk8
 
 before_script:
-    - cd src
+    - cd PotassiumOverload
     - chmod +x gradlew
 
 script:
