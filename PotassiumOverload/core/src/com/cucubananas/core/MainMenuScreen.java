@@ -15,12 +15,13 @@ import java.util.List;
 
 public class MainMenuScreen implements Screen {
 
+  public static final int SCREEN_WIDTH = 1280;
+  public static final int SCREEN_HEIGHT = 720;
+
   final PotassiumOverload game;
   private OrthographicCamera camera;
   private SpriteBatch batch;
   private BitmapFont font;
-  static final int width = 1280;
-  static final int height = 720;
   int padding;
   int state;
 
@@ -29,7 +30,7 @@ public class MainMenuScreen implements Screen {
     font = new BitmapFont();
     batch = new SpriteBatch();
     camera = new OrthographicCamera();
-    camera.setToOrtho(false, width, height);
+    camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
     padding = 50;
     state = 0;
   }
@@ -51,19 +52,19 @@ public class MainMenuScreen implements Screen {
 
     //Title
     font.setColor(Color.GOLD);
-    drawCenteredText(font, "Potassium Overload", width / 2, height / 2 + height / 3);
+    drawCenteredText(font, "Potassium Overload", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + SCREEN_HEIGHT / 3);
 
     //Start
     font.setColor(selections.get(0));
-    drawCenteredText(font, "Start", width / 2, height / 2);
+    drawCenteredText(font, "Start", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
     //Settings
     font.setColor(selections.get(1));
-    drawCenteredText(font, "Settings", width / 2, height / 2 - padding);
+    drawCenteredText(font, "Settings", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - padding);
 
     //Exit
     font.setColor(selections.get(2));
-    drawCenteredText(font, "Exit", width / 2, height / 2 - 2 * padding);
+    drawCenteredText(font, "Exit", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 2 * padding);
 
     if (Gdx.input.isKeyJustPressed(Keys.UP)) {
       state -= 1;
@@ -78,10 +79,11 @@ public class MainMenuScreen implements Screen {
 
     if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
       if (state == 0) {
-        //game.setScreen(new GameScreen(game)); this will be the game screen
+        // this will be the game screen
+        game.setScreen(new GameScreen(game));
       } else if (state == 1) {
-        //game.setScreen(new SettingsScreen(game)); this will be the game screen
-        //game.setScreen(new SettingsScreen(game)); this will be the game screen
+        // this will be the settings screen
+        game.setScreen(new SettingsScreen(game));
       } else {
         Gdx.app.exit();
       }
