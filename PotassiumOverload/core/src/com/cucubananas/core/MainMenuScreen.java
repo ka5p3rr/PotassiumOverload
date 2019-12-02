@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,6 +17,8 @@ public class MainMenuScreen implements Screen {
 
   final PotassiumOverload game;
   private OrthographicCamera camera;
+  private SpriteBatch batch;
+  private BitmapFont font;
   static final int width = 1280;
   static final int height = 720;
   int padding;
@@ -22,6 +26,8 @@ public class MainMenuScreen implements Screen {
 
   public MainMenuScreen(PotassiumOverload game) {
     this.game = game;
+    font = new BitmapFont();
+    batch = new SpriteBatch();
     camera = new OrthographicCamera();
     camera.setToOrtho(false, width, height);
     padding = 50;
@@ -38,29 +44,26 @@ public class MainMenuScreen implements Screen {
     Gdx.gl.glClearColor(0, 0, 0.2f, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     camera.update();
-    game.batch.setProjectionMatrix(camera.combined);
-    game.batch.begin();
+    batch.begin();
 
     List<Color> selections = Arrays.asList(Color.WHITE, Color.WHITE, Color.WHITE);
     selections.set(state, Color.GOLD);
 
     //Title
-    game.font.setColor(Color.GOLD);
-    drawCenteredText(game.font, "Potassium Overload", width / 2, height / 2 + height / 3);
+    font.setColor(Color.GOLD);
+    drawCenteredText(font, "Potassium Overload", width / 2, height / 2 + height / 3);
 
     //Start
-    game.font.setColor(selections.get(0));
-    drawCenteredText(game.font, "Start", width / 2, height / 2);
+    font.setColor(selections.get(0));
+    drawCenteredText(font, "Start", width / 2, height / 2);
 
     //Settings
-    game.font.setColor(selections.get(1));
-    drawCenteredText(game.font, "Settings", width / 2, height / 2 - padding);
+    font.setColor(selections.get(1));
+    drawCenteredText(font, "Settings", width / 2, height / 2 - padding);
 
     //Exit
-    game.font.setColor(selections.get(2));
-    drawCenteredText(game.font, "Exit", width / 2, height / 2 - 2 * padding);
-
-    game.batch.end();
+    font.setColor(selections.get(2));
+    drawCenteredText(font, "Exit", width / 2, height / 2 - 2 * padding);
 
     if (Gdx.input.isKeyJustPressed(Keys.UP)) {
       state -= 1;
@@ -84,6 +87,8 @@ public class MainMenuScreen implements Screen {
       }
       dispose();
     }
+
+    batch.end();
   }
 
   @Override
@@ -114,6 +119,6 @@ public class MainMenuScreen implements Screen {
   private void drawCenteredText(BitmapFont font, String string, int x, int y) {
     GlyphLayout glyph = new GlyphLayout();
     glyph.setText(font, string);
-    font.draw(game.batch, string, x - glyph.width / 2, y);
+    font.draw(batch, string, x - glyph.width / 2, y);
   }
 }
