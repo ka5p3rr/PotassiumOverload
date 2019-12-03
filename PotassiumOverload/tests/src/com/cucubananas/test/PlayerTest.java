@@ -9,11 +9,12 @@ import org.junit.runner.RunWith;
 import static junit.framework.TestCase.assertEquals;
 
 @RunWith(GdxTestRunner.class)
-public class PlayerTests {
+public class PlayerTest {
 
+    private final String BIRD_ASSET_NAME = "assets/bird.png";
     @Test
     public void checkDefaultAttributes() {
-        Player player = new Player("assets/bird.png", 50, 50);
+        Player player = new Player(BIRD_ASSET_NAME, 50, 50);
 
         // Check default position
         float expectedPos = 50.0f;
@@ -26,28 +27,9 @@ public class PlayerTests {
 
     @Test
     public void checkTextureLoading() {
-        Player player = new Player("assets/bird.png", 0, 0);
+        Player player = new Player(BIRD_ASSET_NAME, 0, 0);
 
-        assertEquals("assets/bird.png", player.getTextureName());
+        assertEquals(BIRD_ASSET_NAME, player.getTextureName());
     }
 
-    @Test
-    public void checkYBottomCoordinates() {
-
-    }
-
-    @Test
-    public void checkYTopCoordinates() {
-
-    }
-
-    @Test
-    public void checkXRightCoordinates() {
-
-    }
-
-    @Test
-    public void checkXLeftCoordinates() {
-
-    }
 }
