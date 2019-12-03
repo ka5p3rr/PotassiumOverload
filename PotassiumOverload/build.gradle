@@ -18,6 +18,7 @@ plugins {
 
 allprojects {
     apply plugin: "org.sonarqube"
+    apply plugin: 'jacoco'
 
     version = '0.0.1'
     ext {
