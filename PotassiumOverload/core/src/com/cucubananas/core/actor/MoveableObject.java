@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public abstract class MoveableObject extends Actor {
 
-    public static final Map<facingDirections, Boolean> DIR_TO_ROTATION = new HashMap<>();
+    protected static final Map<facingDirections, Boolean> DIR_TO_ROTATION = new HashMap<>();
 
     static {
         DIR_TO_ROTATION.put(facingDirections.left, true);
