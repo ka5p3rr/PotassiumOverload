@@ -30,7 +30,7 @@ public class GameScreen implements Screen {
     public GameScreen(PotassiumOverload game) {
         this.game = game;
         stage = new Stage();
-        Player player = new Player(0, 0);
+        Player player = new Player(0.0f, 0.0f);
         stage.addActor(player);
         font = new BitmapFont();
         batch = new SpriteBatch();

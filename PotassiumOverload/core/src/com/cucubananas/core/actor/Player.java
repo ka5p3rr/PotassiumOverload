@@ -7,7 +7,7 @@ package com.cucubananas.core.actor;
  */
 public class Player extends MoveableObject {
 
-  public Player(int x, int y) {
+  public Player(float x, float y) {
     super("bird.png", x, y);
   }
 

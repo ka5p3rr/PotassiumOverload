@@ -11,18 +11,17 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  * @author Alexis Araouzous
  */
 public abstract class MoveableObject extends Actor {
-    int x,y;
     Texture texture;
 
-    public MoveableObject (String texturePath, int xPos, int yPos){
+    public MoveableObject (String texturePath, float xPos, float yPos){
         texture = new Texture(texturePath);
-        x = xPos;
-        y = yPos;
-        setBounds(x, y, texture.getWidth(), texture.getHeight());
+        this.setX(xPos);
+        this.setY(yPos);
+        setBounds(xPos, yPos, texture.getWidth(), texture.getHeight());
     }
 
     @Override
     public void draw(Batch batch, float alpha){
-        batch.draw(texture, x, y);
+        batch.draw(texture, this.getX(), this.getY());
     }
 }
