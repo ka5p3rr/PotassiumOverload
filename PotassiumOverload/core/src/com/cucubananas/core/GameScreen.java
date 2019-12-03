@@ -17,19 +17,17 @@ import java.util.logging.Logger;
 public class GameScreen implements Screen {
 
     final PotassiumOverload game;
-    Logger logger = Logger.getLogger(PotassiumOverload.class.getName());
+    Logger logger = Logger.getLogger(GameScreen.class.getName());
     private Stage stage;
     private Player player;
     private OrthographicCamera camera;
-    private SpriteBatch batch;
-    private BitmapFont font;
     int padding;
     int state;
 
     public GameScreen(PotassiumOverload game) {
         this.game = game;
         stage = new Stage();
-        player = new Player("bird.png", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+        player = new Player("bird.png", Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
         stage.addActor(player);
         font = new BitmapFont();
         batch = new SpriteBatch();
@@ -80,32 +78,32 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        // Must override to implement Screen
     }
 
     @Override
     public void show() {
-
+        // Must override to implement Screen
     }
 
     @Override
     public void pause() {
-
+        // Must override to implement Screen
     }
 
     @Override
     public void resume() {
-
+        // Must override to implement Screen
     }
 
     @Override
     public void hide() {
-
+        // Must override to implement Screen
     }
 
     @Override
     public void dispose() {
-
+        // Must override to implement Screen
     }
 
 }

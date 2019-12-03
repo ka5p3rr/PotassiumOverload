@@ -17,12 +17,12 @@ import java.util.Map;
  */
 public abstract class MoveableObject extends Actor {
 
-    public static final Map<facingDirections, Boolean> DIR_TO_ROTATION = new HashMap<facingDirections, Boolean>() {
-        {
-            put(facingDirections.left, true);
-            put(facingDirections.right, false);
-        }
-    };
+    public static final Map<facingDirections, Boolean> DIR_TO_ROTATION = new HashMap<>();
+
+    static {
+        DIR_TO_ROTATION.put(facingDirections.left, true);
+        DIR_TO_ROTATION.put(facingDirections.right, false);
+    }
 
     public enum facingDirections {left, right;}
 
@@ -52,7 +52,7 @@ public abstract class MoveableObject extends Actor {
     }
 
     public String getTextureName() {
-        return ((FileTextureData)texture.getTextureData()).getFileHandle().path();
+        return ((FileTextureData) texture.getTextureData()).getFileHandle().path();
     }
 
 }
