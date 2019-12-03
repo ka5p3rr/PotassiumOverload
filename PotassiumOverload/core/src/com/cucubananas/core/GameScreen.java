@@ -29,8 +29,6 @@ public class GameScreen implements Screen {
         stage = new Stage();
         player = new Player("bird.png", Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
         stage.addActor(player);
-        font = new BitmapFont();
-        batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         padding = 50;
