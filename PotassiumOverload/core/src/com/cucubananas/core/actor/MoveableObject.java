@@ -2,6 +2,7 @@ package com.cucubananas.core.actor;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.HashMap;
@@ -48,6 +49,10 @@ public abstract class MoveableObject extends Actor {
 
     public void setDirection(facingDirections direction) {
         this.direction = direction;
+    }
+
+    public String getTextureName() {
+        return ((FileTextureData)texture.getTextureData()).getFileHandle().path();
     }
 
 }
