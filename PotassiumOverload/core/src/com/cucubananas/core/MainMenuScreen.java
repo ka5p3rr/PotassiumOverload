@@ -15,8 +15,8 @@ import java.util.List;
 
 public class MainMenuScreen implements Screen {
 
-  public static final int SCREEN_WIDTH = 1280;
-  public static final int SCREEN_HEIGHT = 720;
+  public static final int SCREEN_WIDTH = Gdx.graphics.getWidth();
+  public static final int SCREEN_HEIGHT = Gdx.graphics.getHeight();
 
   final PotassiumOverload game;
   private OrthographicCamera camera;

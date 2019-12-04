@@ -5,9 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.cucubananas.core.actor.Background;
 import com.cucubananas.core.actor.Player;
 
 import java.util.logging.Level;
@@ -31,6 +33,7 @@ public class GameScreen implements Screen {
         this.game = game;
         stage = new Stage();
         Player player = new Player(0, 0);
+        stage.addActor(new Background());
         stage.addActor(player);
         font = new BitmapFont();
         batch = new SpriteBatch();
@@ -44,6 +47,7 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         stage.act(delta);
         stage.draw();
 
