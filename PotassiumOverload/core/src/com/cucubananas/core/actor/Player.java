@@ -7,8 +7,8 @@ package com.cucubananas.core.actor;
  */
 public class Player extends MoveableObject {
 
-  public Player(int x, int y) {
-    super("bird.png", x, y);
+  public Player(String texturePath, float x, float y) {
+    super(texturePath, x, y);
   }
 
   @Override

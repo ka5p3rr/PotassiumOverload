@@ -10,35 +10,30 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.cucubananas.core.actor.Background;
+import com.cucubananas.core.actor.MoveableObject;
 import com.cucubananas.core.actor.Player;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.cucubananas.core.MainMenuScreen.SCREEN_HEIGHT;
-import static com.cucubananas.core.MainMenuScreen.SCREEN_WIDTH;
-
 public class GameScreen implements Screen {
 
     final PotassiumOverload game;
-    Logger logger = Logger.getLogger(PotassiumOverload.class.getName());
+    Logger logger = Logger.getLogger(GameScreen.class.getName());
     private Stage stage;
+    private Player player;
     private OrthographicCamera camera;
-    private SpriteBatch batch;
-    private BitmapFont font;
     int padding;
     int state;
 
     public GameScreen(PotassiumOverload game) {
         this.game = game;
         stage = new Stage();
-        Player player = new Player(0, 0);
+        player = new Player("bird.png", Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
         stage.addActor(new Background());
         stage.addActor(player);
-        font = new BitmapFont();
-        batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         padding = 50;
         state = 0;
     }
@@ -53,23 +48,28 @@ public class GameScreen implements Screen {
 
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             // MOVE UP ON Y AXIS
-            logger.log(Level.INFO, "UP");
+            logger.log(Level.INFO, "Player moving up");
+            if (player.getY() <= Gdx.graphics.getHeight() - player.getHeight() - 4) player.setY(player.getY() + 4);
         } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            logger.log(Level.INFO, "DOWN");
             // MOVE DOWN ON Y AXIS
+            logger.log(Level.INFO, "Player moving down");
+            if (player.getY() >= 4) player.setY(player.getY() - 4);
         } else {
             // MOVE DOWN ON Y AXIS BY DEFAULT
-            logger.log(Level.INFO, "GRAVITY DOWN");
+            logger.log(Level.INFO, "Gravity down");
+            if (player.getY() >= 2) player.setY(player.getY() - 2);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             // CHANGE ORIENTATION TO LEFT
-            logger.log(Level.INFO, "LEFT");
+            logger.log(Level.INFO, "Facing left");
+            player.setDirection(MoveableObject.facingDirections.left);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             // CHANGE ORIENTATION TO RIGHT
-            logger.log(Level.INFO, "RIGHT");
+            logger.log(Level.INFO, "Facing right");
+            player.setDirection(MoveableObject.facingDirections.right);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
@@ -80,32 +80,32 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        // Must override to implement Screen
     }
 
     @Override
     public void show() {
-
+        // Must override to implement Screen
     }
 
     @Override
     public void pause() {
-
+        // Must override to implement Screen
     }
 
     @Override
     public void resume() {
-
+        // Must override to implement Screen
     }
 
     @Override
     public void hide() {
-
+        // Must override to implement Screen
     }
 
     @Override
     public void dispose() {
-
+        // Must override to implement Screen
     }
 
 }
