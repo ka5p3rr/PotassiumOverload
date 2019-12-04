@@ -26,8 +26,8 @@ public class GameScreen implements Screen {
 
     public GameScreen(PotassiumOverload game) {
         this.game = game;
-        stage = new Stage();
         player = new Player("bird.png", Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
+        stage = new Stage();
         stage.addActor(player);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -39,9 +39,43 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        readKeyboardInput();
         stage.act(delta);
         stage.draw();
+    }
 
+    @Override
+    public void resize(int width, int height) {
+        // Must override to implement Screen
+    }
+
+    @Override
+    public void show() {
+        // Must override to implement Screen
+    }
+
+    @Override
+    public void pause() {
+        // Must override to implement Screen
+    }
+
+    @Override
+    public void resume() {
+        // Must override to implement Screen
+    }
+
+    @Override
+    public void hide() {
+        // Must override to implement Screen
+    }
+
+    @Override
+    public void dispose() {
+        // Must override to implement Screen
+
+    }
+
+    private void readKeyboardInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             // MOVE UP ON Y AXIS
             logger.log(Level.INFO, "Player moving up");
@@ -73,35 +107,4 @@ public class GameScreen implements Screen {
             logger.log(Level.INFO, "SPACE");
         }
     }
-
-    @Override
-    public void resize(int width, int height) {
-        // Must override to implement Screen
-    }
-
-    @Override
-    public void show() {
-        // Must override to implement Screen
-    }
-
-    @Override
-    public void pause() {
-        // Must override to implement Screen
-    }
-
-    @Override
-    public void resume() {
-        // Must override to implement Screen
-    }
-
-    @Override
-    public void hide() {
-        // Must override to implement Screen
-    }
-
-    @Override
-    public void dispose() {
-        // Must override to implement Screen
-    }
-
 }

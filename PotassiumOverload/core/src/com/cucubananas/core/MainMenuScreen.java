@@ -16,6 +16,7 @@ import java.util.List;
 public class MainMenuScreen implements Screen {
 
   final PotassiumOverload game;
+  private GameScreen gameScreen;
   private OrthographicCamera camera;
   private SpriteBatch batch;
   private BitmapFont font;
@@ -77,7 +78,7 @@ public class MainMenuScreen implements Screen {
     if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
       if (state == 0) {
         // this will be the game screen
-        game.setScreen(new GameScreen(game));
+        game.setScreen(gameScreen = new GameScreen(game));
       } else if (state == 1) {
         // this will be the settings screen
         game.setScreen(new SettingsScreen(game));
@@ -112,7 +113,7 @@ public class MainMenuScreen implements Screen {
 
   @Override
   public void dispose() {
-
+    
   }
 
   private void drawCenteredText(BitmapFont font, String string, int x, int y) {
