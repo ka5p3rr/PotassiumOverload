@@ -2,42 +2,23 @@ package com.cucubananas.core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.cucubananas.core.actor.Player;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.cucubananas.core.MainMenuScreen.SCREEN_HEIGHT;
-import static com.cucubananas.core.MainMenuScreen.SCREEN_WIDTH;
+public class GameScreen extends AbstractScreen {
 
-public class GameScreen implements Screen {
-
-    final PotassiumOverload game;
     Logger logger = Logger.getLogger(PotassiumOverload.class.getName());
     private Stage stage;
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
-    private BitmapFont font;
-    int padding;
-    int state;
 
     public GameScreen(PotassiumOverload game) {
-        this.game = game;
+        super(game);
         stage = new Stage();
         Player player = new Player(0, 0);
         stage.addActor(player);
-        font = new BitmapFont();
-        batch = new SpriteBatch();
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
-        padding = 50;
-        state = 0;
     }
 
     @Override
@@ -72,36 +53,6 @@ public class GameScreen implements Screen {
             // FIRE BULLET
             logger.log(Level.INFO, "SPACE");
         }
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
     }
 
 }
