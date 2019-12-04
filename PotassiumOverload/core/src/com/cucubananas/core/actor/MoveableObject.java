@@ -26,8 +26,8 @@ public abstract class MoveableObject extends Actor {
 
     public enum facingDirections {left, right;}
 
-    private facingDirections direction;
-    private Texture texture;
+    facingDirections direction;
+    Texture texture;
 
     public MoveableObject(String texturePath, float xPos, float yPos) {
         texture = new Texture(texturePath);

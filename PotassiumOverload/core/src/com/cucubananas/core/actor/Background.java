@@ -30,7 +30,7 @@ public class Background extends Actor {
 
   @Override
   public void act(float delta) {
-    sourceX += 0.1;
+    sourceX += 0.2;
     if(sourceX > width)
       sourceX -= width;
 
