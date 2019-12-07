@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.cucubananas.core.PotassiumOverload.GameState;
 import com.cucubananas.core.actor.MoveableObject;
+import com.cucubananas.core.actor.MoveableObject.facingDirections;
 import com.cucubananas.core.actor.Player;
 
 import java.util.logging.Level;
@@ -71,6 +73,7 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             // FIRE BULLET
             logger.log(Level.INFO, "SPACE");
+            resetGame();
         }
     }
 
@@ -104,4 +107,9 @@ public class GameScreen implements Screen {
         // Must override to implement Screen
     }
 
+    public void resetGame(){
+        logger.log(Level.INFO, "Reset Game");
+        game.changeScreen(GameState.GAME_OVER);
+        dispose();
+    }
 }
