@@ -18,7 +18,6 @@ plugins {
 
 allprojects {
     apply plugin: "org.sonarqube"
-    apply plugin: 'jacoco'
 
     version = '0.0.1'
     ext {
@@ -43,8 +42,9 @@ allprojects {
         properties {
             property "sonar.projectKey", "ka5p3rr_PotassiumOverload"
             property "sonar.projectName", "PotassiumOverload"
-            property "sonar.test.inclusions","tests"
-            property "sonar.exclusions", "tests"
+            property "sonar.coverage.exclusions", "**/*"
+            property "sonar.test.inclusions","tests/**, **/*Test.java"
+            property "sonar.exclusions", "tests/**, **/*Test.java"
         }
     }
 }

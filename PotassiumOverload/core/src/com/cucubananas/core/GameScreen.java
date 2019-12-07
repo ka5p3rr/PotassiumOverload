@@ -2,39 +2,26 @@ package com.cucubananas.core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.cucubananas.core.PotassiumOverload.GameState;
 import com.cucubananas.core.actor.MoveableObject;
-import com.cucubananas.core.actor.MoveableObject.facingDirections;
 import com.cucubananas.core.actor.Player;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class GameScreen implements Screen {
+public class GameScreen extends AbstractScreen {
 
-    final PotassiumOverload game;
-    Logger logger = Logger.getLogger(GameScreen.class.getName());
+    private Logger logger = Logger.getLogger(PotassiumOverload.class.getName());
     private Stage stage;
     private Player player;
-    private OrthographicCamera camera;
-    int padding;
-    int state;
 
     public GameScreen(PotassiumOverload game) {
-        this.game = game;
+        super(game);
         stage = new Stage();
         player = new Player("bird.png", Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
         stage.addActor(player);
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        padding = 50;
-        state = 0;
     }
 
     @Override
@@ -112,4 +99,5 @@ public class GameScreen implements Screen {
         game.changeScreen(GameState.GAME_OVER);
         dispose();
     }
+
 }
