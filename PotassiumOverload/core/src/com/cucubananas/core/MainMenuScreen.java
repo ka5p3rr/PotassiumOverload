@@ -15,9 +15,6 @@ import java.util.List;
 
 public class MainMenuScreen extends AbstractScreen {
 
-    public static final int SCREEN_WIDTH = 1280;
-    public static final int SCREEN_HEIGHT = 720;
-
     public MainMenuScreen(PotassiumOverload game) {
         super(game);
     }
@@ -34,19 +31,19 @@ public class MainMenuScreen extends AbstractScreen {
 
         //Title
         font.setColor(Color.GOLD);
-        drawCenteredText(font, "Potassium Overload", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + SCREEN_HEIGHT / 3);
+        drawCenteredText(font, "Potassium Overload",  Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 + Gdx.graphics.getHeight() / 3);
 
         //Start
         font.setColor(selections.get(0));
-        drawCenteredText(font, "Start", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+        drawCenteredText(font, "Start",  Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
 
         //Settings
         font.setColor(selections.get(1));
-        drawCenteredText(font, "Settings", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - padding);
+        drawCenteredText(font, "Settings",  Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 - padding);
 
         //Exit
         font.setColor(selections.get(2));
-        drawCenteredText(font, "Exit", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 2 * padding);
+        drawCenteredText(font, "Exit",  Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 - 2 * padding);
 
         if (Gdx.input.isKeyJustPressed(Keys.UP)) {
             state -= 1;
