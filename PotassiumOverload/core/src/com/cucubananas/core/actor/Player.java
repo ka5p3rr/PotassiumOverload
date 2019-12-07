@@ -1,5 +1,6 @@
 package com.cucubananas.core.actor;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -17,6 +18,7 @@ public class Player extends AnimatedMoveableObject {
   private static final String RIGHT = "RIGHT";
 
   private String currentState;
+  private String currentDirection;
 
   public Player(float x, float y) {
     super("characterspritesheet.png", x, y);
@@ -32,14 +34,31 @@ public class Player extends AnimatedMoveableObject {
   }
 
   @Override
-  public void act(float delta) {
-
+  public void draw(Batch batch, float alpha) {
+    batch.draw(spriteSheet.get(currentState), getX(), getY(), 52, 100);
   }
 
 
+  public void drop() {
+    if (getY() >= 2)
+      setY(getY() - 2);
+  }
 
-  @Override
-  public void draw(Batch batch, float alpha) {
-    batch.draw(spriteSheet.get(currentState), getX(), getY(), 52, 100);
+  public void moveDown() {
+    if (getY() >= 4)
+      setY(getY() - 4);
+  }
+
+  public void moveUp() {
+    if (getY() <= Gdx.graphics.getHeight() - getHeight() - 4)
+      setY(getY() + 4);
+  }
+
+  public void moveLeft() {
+
+  }
+
+  public void moveRight() {
+
   }
 }
