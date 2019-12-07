@@ -7,6 +7,6 @@ package com.cucubananas.core.actor;
  */
 public class Bullet extends MoveableObject {
   public Bullet(int x, int y) {
-    super("badlogic.jpg", x, y);
+    super("badlogic.jpg", x, y, 100);
   }
 }

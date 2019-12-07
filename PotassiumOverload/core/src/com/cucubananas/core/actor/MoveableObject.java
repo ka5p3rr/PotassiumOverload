@@ -28,12 +28,14 @@ public abstract class MoveableObject extends Actor {
 
     private facingDirections direction;
     private Texture texture;
+    private float health;
 
-    public MoveableObject(String texturePath, float xPos, float yPos) {
+    public MoveableObject(String texturePath, float xPos, float yPos, float health) {
         texture = new Texture(texturePath);
         direction = facingDirections.right;
         this.setX(xPos);
         this.setY(yPos);
+        this.setHealth(health);
         setBounds(xPos, yPos, texture.getWidth(), texture.getHeight());
     }
 
@@ -49,6 +51,14 @@ public abstract class MoveableObject extends Actor {
 
     public void setDirection(facingDirections direction) {
         this.direction = direction;
+    }
+
+    public void setHealth(float health){
+        this.health = health;
+    }
+
+    public float getHealth(){
+        return health;
     }
 
     public String getTextureName() {

@@ -8,8 +8,12 @@ package com.cucubananas.core.actor;
 public class Player extends MoveableObject {
 
   public Player(String texturePath, float x, float y) {
-    super(texturePath, x, y);
+    this(texturePath, x, y, 100);
   }
+  public Player(String texturePath, float x, float y, float health) {
+    super(texturePath, x, y, health);
+  }
+
 
   @Override
   public void act(float delta) {
