@@ -18,7 +18,7 @@ public class Player extends AnimatedMoveableObject {
   private static final String RIGHT = "RIGHT";
 
   private String currentState;
-  private String currentDirection;
+  private static final float MOVEMENT = 4;
 
   public Player(float x, float y) {
     super("characterspritesheet.png", x, y);
@@ -40,18 +40,18 @@ public class Player extends AnimatedMoveableObject {
 
 
   public void drop() {
-    if (getY() >= 2)
-      setY(getY() - 2);
+    if (getY() >= MOVEMENT/2)
+      setY(getY() - MOVEMENT/2);
   }
 
   public void moveDown() {
-    if (getY() >= 4)
-      setY(getY() - 4);
+    if (getY() >= MOVEMENT)
+      setY(getY() - MOVEMENT);
   }
 
   public void moveUp() {
-    if (getY() <= Gdx.graphics.getHeight() - getHeight() - 4)
-      setY(getY() + 4);
+    if (getY() <= Gdx.graphics.getHeight() - getHeight() - MOVEMENT)
+      setY(getY() + MOVEMENT);
   }
 
   public void moveLeft() {
