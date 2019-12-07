@@ -22,9 +22,7 @@ public abstract class MoveableObject extends Actor {
     float x, y;
     Texture texture;
     Rectangle hitbox;
-    private FACING_DIRECTIONS direction;   
-    private facingDirections direction;
-    private Texture texture;
+    private FACING_DIRECTIONS direction;
     private float health;
 
     protected static final Map<FACING_DIRECTIONS, Boolean> DIR_TO_ROTATION = new HashMap<>();
