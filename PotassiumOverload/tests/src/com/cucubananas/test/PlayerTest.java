@@ -22,7 +22,7 @@ public class PlayerTest {
         assertEquals(expectedPos, player.getY());
 
         // Check default facing direction
-        assertEquals(MoveableObject.facingDirections.right, player.getDirection());
+        assertEquals(MoveableObject.FACING_DIRECTIONS.right, player.getDirection());
     }
 
     @Test
