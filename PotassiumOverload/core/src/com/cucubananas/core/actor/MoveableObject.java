@@ -1,10 +1,8 @@
 package com.cucubananas.core.actor;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.FileTextureData;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -24,20 +22,20 @@ public abstract class MoveableObject extends Actor {
     float x, y;
     Texture texture;
     Rectangle hitbox;
-    private facingDirections direction;
+    private FACING_DIRECTIONS direction;
 
-    protected static final Map<facingDirections, Boolean> DIR_TO_ROTATION = new HashMap<>();
+    protected static final Map<FACING_DIRECTIONS, Boolean> DIR_TO_ROTATION = new HashMap<>();
 
     static {
-        DIR_TO_ROTATION.put(facingDirections.left, true);
-        DIR_TO_ROTATION.put(facingDirections.right, false);
+        DIR_TO_ROTATION.put(FACING_DIRECTIONS.left, true);
+        DIR_TO_ROTATION.put(FACING_DIRECTIONS.right, false);
     }
 
-    public enum facingDirections {left, right;}
+    public enum FACING_DIRECTIONS {left, right;}
 
     public MoveableObject(String texturePath, float xPos, float yPos) {
         texture = new Texture(texturePath);
-        direction = facingDirections.right;
+        direction = FACING_DIRECTIONS.right;
         this.setX(xPos);
         this.setY(yPos);
         x = xPos;
@@ -65,11 +63,11 @@ public abstract class MoveableObject extends Actor {
         return hitbox;
     }
 
-    public facingDirections getDirection() {
+    public FACING_DIRECTIONS getDirection() {
         return direction;
     }
 
-    public void setDirection(facingDirections direction) {
+    public void setDirection(FACING_DIRECTIONS direction) {
         this.direction = direction;
     }
 

@@ -50,13 +50,13 @@ public class GameScreen extends AbstractScreen {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             // CHANGE ORIENTATION TO LEFT
             logger.log(Level.INFO, "Facing left");
-            player.setDirection(MoveableObject.facingDirections.left);
+            player.setDirection(MoveableObject.FACING_DIRECTIONS.left);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             // CHANGE ORIENTATION TO RIGHT
             logger.log(Level.INFO, "Facing right");
-            player.setDirection(MoveableObject.facingDirections.right);
+            player.setDirection(MoveableObject.FACING_DIRECTIONS.right);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
