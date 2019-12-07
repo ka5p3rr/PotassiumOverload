@@ -17,6 +17,9 @@ public class Player extends AnimatedMoveableObject {
   private static final String LEFT = "LEFT";
   private static final String RIGHT = "RIGHT";
 
+  private static final int WIDTH = 52;
+  private static final int HEIGHT = 100;
+
   private String xState;
   private String yState;
   private static final float MOVEMENT = 4;
@@ -26,7 +29,7 @@ public class Player extends AnimatedMoveableObject {
   }
 
   public Player(float x, float y, float health) {
-    super("characterspritesheet.png", x, y, health);
+    super("characterspritesheet.png", x, y, health, WIDTH, HEIGHT);
     xState = RIGHT;
     yState = UP;
 

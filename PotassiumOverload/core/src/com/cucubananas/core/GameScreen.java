@@ -71,7 +71,7 @@ public class GameScreen extends AbstractScreen {
         }
 
         stage.updateHitboxes();
-        // stage.checkProjectilesCollision();
+        stage.checkMissileCollision(missiles);
         stage.moveProjectiles(counter, range, missiles);
         counter++;
         score++;

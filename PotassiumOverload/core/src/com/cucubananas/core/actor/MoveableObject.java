@@ -33,7 +33,13 @@ public abstract class MoveableObject extends Actor {
     }
 
     public enum FACING_DIRECTIONS {left, right;}
- 
+
+    public MoveableObject(String texturePath, float xPos, float yPos, float health, int width, int height) {
+        this(texturePath, xPos, yPos, health);
+        hitbox.width = width;
+        hitbox.height = height;
+    }
+
     public MoveableObject(String texturePath, float xPos, float yPos, float health) {
         texture = new Texture(texturePath);
         direction = FACING_DIRECTIONS.right;
@@ -91,5 +97,13 @@ public abstract class MoveableObject extends Actor {
 
     public boolean checkCollision(MoveableObject mo) {
         return this.getHitbox().overlaps(mo.getHitbox());
+    }
+
+    public void setHitboxWidth() {
+
+    }
+
+    public void setHitboxHeight() {
+
     }
 }

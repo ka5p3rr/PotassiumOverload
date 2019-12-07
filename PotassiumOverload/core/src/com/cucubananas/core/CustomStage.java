@@ -21,16 +21,20 @@ public class CustomStage extends Stage {
         }
     }
 
-        /*
-        //TODO uncomment once Projectile and Collectibles are implemented
-        public void checkProjectilesCollision() {
-
-            for (Actor a : this.getActors()) {
-                if (a instanceof Projectile) {
-                   player.checkCollision((MoveableObject) a);
+    public void checkMissileCollision(ArrayList<Missile> missiles) {
+        for (Actor a : this.getActors()) {
+            if (a instanceof Missile) {
+                if(player.checkCollision((Missile) a)) {
+                    this.getRoot().removeActor(a);
+                    missiles.remove(a);
                 }
             }
         }
+    }
+
+        /*
+        //TODO uncomment once Projectile and Collectibles are implemented
+
 
         public void checkCollectiblesCollision() {
             for (Actor a : this.getActors()) {
@@ -43,7 +47,6 @@ public class CustomStage extends Stage {
 
     public void moveProjectiles(Integer counter, int range, ArrayList<Missile> missiles) {
         for (Actor a : this.getActors()) {
-
             if (a instanceof Projectile) {
                 if (counter % 10 == 0) ((Missile) a).setWeight(GameScreen.calculateWeight(range));
                 switch (((Projectile) a).getDirection()) {
