@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class AnimatedMoveableObject extends MoveableObject {
   HashMap<String, TextureRegion> spriteSheet;
 
-  public AnimatedMoveableObject(String texturePath, int xPos, int yPos) {
+  public AnimatedMoveableObject(String texturePath, float xPos, float yPos) {
     super(texturePath, xPos, yPos);
     spriteSheet = new HashMap<>();
   }

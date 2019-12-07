@@ -18,7 +18,7 @@ public class Player extends AnimatedMoveableObject {
 
   private String currentState;
 
-  public Player(int x, int y) {
+  public Player(float x, float y) {
     super("characterspritesheet.png", x, y);
     currentState = DOWN + RIGHT;
 
@@ -28,7 +28,7 @@ public class Player extends AnimatedMoveableObject {
     spriteSheet.put(DOWN + LEFT, new TextureRegion(texture,52,0,52,100));
     spriteSheet.put(UP + LEFT, new TextureRegion(texture,0,0,52,100));
     spriteSheet.put(SHOOTING + LEFT, new TextureRegion(texture,0,0,52,100));
-
+    setBounds(x,y,52,100);
   }
 
   @Override
@@ -36,8 +36,10 @@ public class Player extends AnimatedMoveableObject {
 
   }
 
+
+
   @Override
   public void draw(Batch batch, float alpha) {
-    batch.draw(spriteSheet.get(currentState), x, y);
+    batch.draw(spriteSheet.get(currentState), getX(), getY(), 52, 100);
   }
 }
