@@ -9,8 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class AbstractScreen implements Screen {
 
-    public static final int SCREEN_WIDTH = 1280;
-    public static final int SCREEN_HEIGHT = 720;
 
     final PotassiumOverload game;
     protected OrthographicCamera camera;
@@ -24,7 +22,7 @@ public abstract class AbstractScreen implements Screen {
         font = new BitmapFont();
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         padding = 50;
         state = 0;
     }
