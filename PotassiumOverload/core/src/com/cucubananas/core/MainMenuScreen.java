@@ -15,8 +15,8 @@ import java.util.List;
 
 public class MainMenuScreen implements Screen {
 
-  public static final int SCREEN_WIDTH = 1280;
-  public static final int SCREEN_HEIGHT = 720;
+  public static final int SCREEN_WIDTH = Gdx.graphics.getWidth();
+  public static final int SCREEN_HEIGHT = Gdx.graphics.getHeight();
 
   final PotassiumOverload game;
   private OrthographicCamera camera;
@@ -30,7 +30,7 @@ public class MainMenuScreen implements Screen {
     font = new BitmapFont();
     batch = new SpriteBatch();
     camera = new OrthographicCamera();
-    camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
+    camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     padding = 50;
     state = 0;
   }
@@ -52,19 +52,19 @@ public class MainMenuScreen implements Screen {
 
     //Title
     font.setColor(Color.GOLD);
-    drawCenteredText(font, "Potassium Overload", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + SCREEN_HEIGHT / 3);
+    drawCenteredText(font, "Potassium Overload", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 + Gdx.graphics.getHeight() / 3);
 
     //Start
     font.setColor(selections.get(0));
-    drawCenteredText(font, "Start", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+    drawCenteredText(font, "Start", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
 
     //Settings
     font.setColor(selections.get(1));
-    drawCenteredText(font, "Settings", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - padding);
+    drawCenteredText(font, "Settings", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 - padding);
 
     //Exit
     font.setColor(selections.get(2));
-    drawCenteredText(font, "Exit", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 2 * padding);
+    drawCenteredText(font, "Exit", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 - 2 * padding);
 
     if (Gdx.input.isKeyJustPressed(Keys.UP)) {
       state -= 1;

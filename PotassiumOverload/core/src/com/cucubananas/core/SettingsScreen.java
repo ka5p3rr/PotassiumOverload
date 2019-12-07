@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import static com.cucubananas.core.MainMenuScreen.SCREEN_HEIGHT;
-import static com.cucubananas.core.MainMenuScreen.SCREEN_WIDTH;
 
 public class SettingsScreen implements Screen {
 
@@ -24,7 +22,7 @@ public class SettingsScreen implements Screen {
         font = new BitmapFont();
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         padding = 50;
         state = 0;
     }
