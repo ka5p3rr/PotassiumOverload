@@ -17,48 +17,57 @@ public class Player extends AnimatedMoveableObject {
   private static final String LEFT = "LEFT";
   private static final String RIGHT = "RIGHT";
 
-  private String currentState;
+  private String xState;
+  private String yState;
   private static final float MOVEMENT = 4;
 
   public Player(float x, float y) {
     super("characterspritesheet.png", x, y);
-    currentState = DOWN + RIGHT;
+    xState = RIGHT;
+    yState = UP;
 
-    spriteSheet.put(DOWN + RIGHT, new TextureRegion(texture,0,0,52,100));
-    spriteSheet.put(UP + RIGHT, new TextureRegion(texture,52,0,52,100));
-    spriteSheet.put(SHOOTING + RIGHT, new TextureRegion(texture,104,0,52,100));
-    spriteSheet.put(DOWN + LEFT, new TextureRegion(texture,52,0,52,100));
-    spriteSheet.put(UP + LEFT, new TextureRegion(texture,0,0,52,100));
-    spriteSheet.put(SHOOTING + LEFT, new TextureRegion(texture,0,0,52,100));
+    spriteSheet.put(RIGHT + DOWN, new TextureRegion(texture,0,0,52,100));
+    spriteSheet.put(RIGHT + UP, new TextureRegion(texture,52,0,52,100));
+    spriteSheet.put(RIGHT + SHOOTING, new TextureRegion(texture,104,0,52,100));
+    spriteSheet.put(LEFT + DOWN, new TextureRegion(texture,0,100,52,100));
+    spriteSheet.put(LEFT + UP, new TextureRegion(texture,52,100,52,100));
+    spriteSheet.put(LEFT + SHOOTING, new TextureRegion(texture,104,100,52,100));
     setBounds(x,y,52,100);
   }
 
   @Override
   public void draw(Batch batch, float alpha) {
-    batch.draw(spriteSheet.get(currentState), getX(), getY(), 52, 100);
+    batch.draw(spriteSheet.get(xState + yState), getX(), getY(), 52, 100);
   }
 
 
   public void drop() {
-    if (getY() >= MOVEMENT/2)
-      setY(getY() - MOVEMENT/2);
+    if (getY() < MOVEMENT/2)
+      return;
+    setY(getY() - MOVEMENT/2);
+    yState = DOWN;
   }
 
   public void moveDown() {
-    if (getY() >= MOVEMENT)
-      setY(getY() - MOVEMENT);
+    if (getY() < MOVEMENT)
+      return;
+    setY(getY() - MOVEMENT);
+    yState = DOWN;
   }
 
   public void moveUp() {
-    if (getY() <= Gdx.graphics.getHeight() - getHeight() - MOVEMENT)
-      setY(getY() + MOVEMENT);
+    if (getY() > Gdx.graphics.getHeight() - getHeight() - MOVEMENT)
+      return;
+
+    setY(getY() + MOVEMENT);
+    yState = UP;
   }
 
   public void moveLeft() {
-
+    xState = LEFT;
   }
 
   public void moveRight() {
-
+    xState = RIGHT;
   }
 }
