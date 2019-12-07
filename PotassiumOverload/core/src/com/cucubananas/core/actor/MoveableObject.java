@@ -1,8 +1,11 @@
 package com.cucubananas.core.actor;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import java.util.HashMap;
 
 /**
  * Represents the base object of all {@link MoveableObject} in the game. All {@link MoveableObject}
