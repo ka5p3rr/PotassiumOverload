@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.cucubananas.core.PotassiumOverload.GameState;
+import com.cucubananas.core.actor.Missile;
 import com.cucubananas.core.actor.MoveableObject;
 import com.cucubananas.core.actor.Player;
 
@@ -25,6 +26,7 @@ public class GameScreen extends AbstractScreen {
         p2 = new Player("bird.png", Gdx.graphics.getWidth() / 2f, 0);
         stage.addActor(p2);
         stage.addActor(player);
+
     }
 
     @Override
@@ -121,4 +123,15 @@ public class GameScreen extends AbstractScreen {
         dispose();
     }
 
+    private Missile createLeftMissile() {
+        Missile missile = new Missile(0, getRandomYPos());
+    }
+
+    private Missile createRightMissile() {
+        Missile missile = new Missile(Gdx.graphics.getWidth(), getRandomYPos());
+    }
+    
+    private int getRandomYPos() {
+        return (int)(Math.random() * Gdx.graphics.getWidth() + 1);
+    }
 }
