@@ -2,9 +2,19 @@ package com.cucubananas.core.actor;
 
 public class Missile extends Projectile {
 
-    public Missile(int x, int y) {
-        super("badlogic.jpg", x, y, 100);
+    public int weight;
+    public Missile(int x, int y, int weight) {
+        super("bird.png", x, y, 100);
+        this.weight = weight;
+
     }
 
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
 
 }

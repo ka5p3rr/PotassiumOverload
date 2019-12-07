@@ -9,7 +9,10 @@ import com.cucubananas.core.PotassiumOverload.GameState;
 import com.cucubananas.core.actor.Missile;
 import com.cucubananas.core.actor.MoveableObject;
 import com.cucubananas.core.actor.Player;
+import com.cucubananas.core.actor.Projectile;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,15 +21,26 @@ public class GameScreen extends AbstractScreen {
     private Logger logger = Logger.getLogger(PotassiumOverload.class.getName());
     private CustomStage stage;
     private Player player, p2;
+    private ArrayList<Missile> missiles;
+    private int range, numberOfEnemies, score;
+    private static Integer counter = 0;
 
     public GameScreen(PotassiumOverload game) {
         super(game);
         stage = new CustomStage();
+        range = 10;
+        score = 100;
+        missiles = new ArrayList<>();
         player = new Player("bird.png", Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
         p2 = new Player("bird.png", Gdx.graphics.getWidth() / 2f, 0);
         stage.addActor(p2);
         stage.addActor(player);
-
+        Missile m1 = createMissile();
+        Missile m2 = createMissile();
+        missiles.add(m1);
+        missiles.add(m2);
+        stage.addActor(m1);
+        stage.addActor(m2);
     }
 
     @Override
@@ -35,6 +49,13 @@ public class GameScreen extends AbstractScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
+
+        calculateEnemies();
+        while (missiles.size() < numberOfEnemies) {
+            Missile m = createMissile();
+            missiles.add(m);
+            stage.addActor(m);
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             // MOVE UP ON Y AXIS
@@ -69,69 +90,51 @@ public class GameScreen extends AbstractScreen {
         }
 
         stage.updateHitboxes();
+        // stage.checkProjectilesCollision();
+        stage.moveProjectiles(counter, range, missiles);
 
-        System.out.println(player.checkCollision(p2));
+        counter++;
+        score++;
+
+
         //TODO uncomment once Projectile and Collectibles are implemented
         /*
-        stage.checkProjectilesCollision();
         stage.checkCollectiblesCollision();
          */
 
     }
 
-    private class CustomStage extends Stage {
-        Player player;
-
-        public void updateHitboxes() {
-            for (Actor a : this.getActors()) {
-                if (a instanceof MoveableObject) {
-                    ((MoveableObject) a).updateHitbox();
-                }
-            }
-        }
-
-        /*
-        //TODO uncomment once Projectile and Collectibles are implemented
-        public void checkProjectilesCollision() {
-
-            for (Actor a : this.getActors()) {
-                if (a instanceof Projectile) {
-                   player.checkCollision((MoveableObject) a);
-                }
-            }
-        }
-
-        public void checkCollectiblesCollision() {
-            for (Actor a : this.getActors()) {
-                if (a instanceof Collectible) {
-                    player.checkCollision((MoveableObject) a);
-                }
-            }
-        }
-          */
-
-        @Override
-        public void addActor(Actor actor) {
-            if (actor instanceof Player) player = (Player) actor;
-            super.addActor(actor);
-        }
-    }
-
-    public void resetGame(){
+    public void resetGame() {
         logger.log(Level.INFO, "Reset Game");
         game.changeScreen(GameState.GAME_OVER);
         dispose();
     }
 
-    private Missile createLeftMissile() {
-        Missile missile = new Missile(0, getRandomYPos());
+    private Missile createMissile() {
+        Missile missile;
+        double dir = Math.random();
+
+        if (dir < 0.5) {
+            missile = new Missile(0, getRandomYPos(), range);
+            missile.setDirection(MoveableObject.FACING_DIRECTIONS.right);
+        } else {
+            missile = new Missile(Gdx.graphics.getWidth(), getRandomYPos(), range);
+            missile.setDirection(MoveableObject.FACING_DIRECTIONS.left);
+        }
+
+        return missile;
     }
 
-    private Missile createRightMissile() {
-        Missile missile = new Missile(Gdx.graphics.getWidth(), getRandomYPos());
-    }
-    
+
     private int getRandomYPos() {
-        return (int)(Math.random() * Gdx.graphics.getWidth() + 1);
+        return (int) (Math.random() * Gdx.graphics.getWidth() + 1);
+    }
+
+    public static int calculateWeight(int range) {
+        return (int) (Math.random() * range);
+    }
+
+    private void calculateEnemies() {
+        numberOfEnemies = score / 50;
     }
 }
