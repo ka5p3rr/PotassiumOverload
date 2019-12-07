@@ -115,36 +115,6 @@ public class GameScreen extends AbstractScreen {
         }
     }
 
-    @Override
-    public void resize(int width, int height) {
-        // Must override to implement Screen
-    }
-
-    @Override
-    public void show() {
-        // Must override to implement Screen
-    }
-
-    @Override
-    public void pause() {
-        // Must override to implement Screen
-    }
-
-    @Override
-    public void resume() {
-        // Must override to implement Screen
-    }
-
-    @Override
-    public void hide() {
-        // Must override to implement Screen
-    }
-
-    @Override
-    public void dispose() {
-        // Must override to implement Screen
-    }
-
     public void resetGame(){
         logger.log(Level.INFO, "Reset Game");
         game.changeScreen(GameState.GAME_OVER);
