@@ -1,9 +1,13 @@
 package com.cucubananas.core.actor;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.FileTextureData;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +21,11 @@ import java.util.Map;
  */
 public abstract class MoveableObject extends Actor {
 
+    float x, y;
+    Texture texture;
+    Rectangle hitbox;
+    private facingDirections direction;
+
     protected static final Map<facingDirections, Boolean> DIR_TO_ROTATION = new HashMap<>();
 
     static {
@@ -26,21 +35,34 @@ public abstract class MoveableObject extends Actor {
 
     public enum facingDirections {left, right;}
 
-    private facingDirections direction;
-    private Texture texture;
-
     public MoveableObject(String texturePath, float xPos, float yPos) {
         texture = new Texture(texturePath);
         direction = facingDirections.right;
         this.setX(xPos);
         this.setY(yPos);
-        setBounds(xPos, yPos, texture.getWidth(), texture.getHeight());
+        x = xPos;
+        y = yPos;
+        hitbox = new Rectangle();
+        hitbox.x = xPos;
+        hitbox.y = yPos;
+        hitbox.width = texture.getWidth();
+        hitbox.height = texture.getHeight();
+        setBounds(x, y, texture.getWidth(), texture.getHeight());
     }
 
     @Override
-    public void draw(Batch batch, float alpha) {
+    public void draw(Batch batch, float alpha){
         batch.draw(texture, this.getX(), this.getY(), (float) texture.getWidth(), (float) texture.getHeight(), (int) this.getOriginX(), (int) this.getOriginY(),
                 (int) this.getWidth(), (int) this.getHeight(), DIR_TO_ROTATION.get(direction), false);
+    }
+
+    public void updateHitbox() {
+        hitbox.x = this.getX();
+        hitbox.y = this.getY();
+    }
+
+    public Rectangle getHitbox() {
+        return hitbox;
     }
 
     public facingDirections getDirection() {
@@ -55,4 +77,7 @@ public abstract class MoveableObject extends Actor {
         return ((FileTextureData) texture.getTextureData()).getFileHandle().path();
     }
 
+    public boolean checkCollision(MoveableObject mo) {
+        return this.getHitbox().overlaps(mo.getHitbox());
+    }
 }
