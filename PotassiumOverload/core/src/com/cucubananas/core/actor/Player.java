@@ -10,11 +10,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 public class Player extends MoveableObject {
 
-  TextureRegion firstFrame;
 
   public Player(String texturePath, float x, float y) {
     super(texturePath, x, y);
-    firstFrame = new TextureRegion(this.texture, 100, 100);
   }
 
   @Override
@@ -23,7 +21,7 @@ public class Player extends MoveableObject {
 
   @Override
   public void draw(Batch batch, float alpha) {
-    batch.draw(firstFrame, this.getX(), this.getY(), (int)this.getOriginX(), (int) this.getOriginY(), 100, 100, 1.0f, 1.0f, 0);
+    //batch.draw(firstFrame, this.getX(), this.getY(), (int)this.getOriginX(), (int) this.getOriginY(), 100, 100, 1.0f, 1.0f, 0);
   }
 
 }
