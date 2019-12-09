@@ -9,6 +9,7 @@ import com.cucubananas.core.actor.Player;
 import com.cucubananas.core.actor.Projectile;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomStage extends Stage {
     Player player;
@@ -21,7 +22,7 @@ public class CustomStage extends Stage {
         }
     }
 
-    public void checkMissileCollision(ArrayList<Missile> missiles) {
+    public void checkMissileCollision(List<Missile> missiles) {
         for (Actor a : this.getActors()) {
             if (a instanceof Missile) {
                 if(player.checkCollision((Missile) a)) {
@@ -45,7 +46,7 @@ public class CustomStage extends Stage {
         }
           */
 
-    public void moveProjectiles(Integer counter, int range, ArrayList<Missile> missiles) {
+    public void moveMissiles(Integer counter, int range, List<Missile> missiles) {
         for (Actor a : this.getActors()) {
             if (a instanceof Projectile) {
                 if (counter % 10 == 0) ((Missile) a).setWeight(GameScreen.calculateWeight(range));

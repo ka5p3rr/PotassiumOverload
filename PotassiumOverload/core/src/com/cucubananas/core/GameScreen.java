@@ -9,6 +9,7 @@ import com.cucubananas.core.actor.*;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +18,7 @@ public class GameScreen extends AbstractScreen {
     private Logger logger = Logger.getLogger(PotassiumOverload.class.getName());
     private CustomStage stage;
     private Player player;
-    private ArrayList<Missile> missiles;
+    private List<Missile> missiles;
     private int range, numberOfEnemies, score;
     private static Integer counter = 0;
 
@@ -73,7 +74,7 @@ public class GameScreen extends AbstractScreen {
 
         stage.updateHitboxes();
         stage.checkMissileCollision(missiles);
-        stage.moveProjectiles(counter, range, missiles);
+        stage.moveMissiles(counter, range, missiles);
         counter++;
         score++;
 
