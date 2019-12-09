@@ -29,8 +29,8 @@ public abstract class MoveableObject extends Actor {
     public static final String FACING_DIRECTIONS_RIGHT = "FACING_DIRECTIONS_RIGHT";
 
     static {
-        DIR_TO_ROTATION.put(FACING_DIRECTIONS_LEFT, false);
-        DIR_TO_ROTATION.put(FACING_DIRECTIONS_RIGHT, true);
+        DIR_TO_ROTATION.put(FACING_DIRECTIONS_LEFT, true);
+        DIR_TO_ROTATION.put(FACING_DIRECTIONS_RIGHT, false);
     }
 
     public MoveableObject(String texturePath, float xPos, float yPos, float health, int width, int height) {
