@@ -9,6 +9,7 @@ import com.cucubananas.core.actor.Player;
 import com.cucubananas.core.actor.Projectile;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomStage extends Stage {
     Player player;
@@ -21,12 +22,12 @@ public class CustomStage extends Stage {
         }
     }
 
-    public void checkMissileCollision(ArrayList<Missile> missiles) {
+    public void checkMissileCollision(List<Projectile> projectiles) {
         for (Actor a : this.getActors()) {
             if (a instanceof Missile) {
                 if(player.checkCollision((Missile) a)) {
                     this.getRoot().removeActor(a);
-                    missiles.remove(a);
+                    projectiles.remove(a);
                 }
             }
         }
@@ -45,7 +46,7 @@ public class CustomStage extends Stage {
         }
           */
 
-    public void moveProjectiles(Integer counter, int range, ArrayList<Missile> missiles) {
+    public void moveProjectiles(Integer counter, int range, List<Projectile> projectiles) {
         for (Actor a : this.getActors()) {
             if (a instanceof Projectile) {
                 if (counter % 10 == 0) ((Missile) a).setWeight(GameScreen.calculateWeight(range));
@@ -57,7 +58,7 @@ public class CustomStage extends Stage {
                         if(a.getY() <= 0) a.setY(0);
                         if (a.getX() <= 0 || a.getX() >= Gdx.graphics.getWidth()) {
                             this.getRoot().removeActor(a);
-                            missiles.remove(a);
+                            projectiles.remove(a);
                         }
 
                             break;
@@ -68,7 +69,7 @@ public class CustomStage extends Stage {
                         if(a.getY() <= 0) a.setY(0);
                         if (a.getX() <= 0 || a.getX() >= Gdx.graphics.getWidth()) {
                             this.getRoot().removeActor(a);
-                            missiles.remove(a);
+                            projectiles.remove(a);
                         }
                         break;
                 }

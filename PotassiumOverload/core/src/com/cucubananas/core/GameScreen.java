@@ -8,6 +8,7 @@ import com.cucubananas.core.actor.Background;
 import com.cucubananas.core.actor.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,7 +17,7 @@ public class GameScreen extends AbstractScreen {
     private Logger logger = Logger.getLogger(PotassiumOverload.class.getName());
     private CustomStage stage;
     private Player player;
-    private ArrayList<Missile> missiles;
+    private List<Projectile> projectiles;
     private int range, numberOfEnemies, score;
     private static Integer counter = 0;
 
@@ -25,14 +26,14 @@ public class GameScreen extends AbstractScreen {
         stage = new CustomStage();
         range = 10;
         score = 200;
-        missiles = new ArrayList<>();
+        projectiles = new ArrayList<>();
         player = new Player(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
         stage.addActor(new Background());
         stage.addActor(player);
         Missile m1 = createMissile();
         Missile m2 = createMissile();
-        missiles.add(m1);
-        missiles.add(m2);
+        projectiles.add(m1);
+        projectiles.add(m2);
         stage.addActor(m1);
         stage.addActor(m2);
     }
@@ -44,9 +45,9 @@ public class GameScreen extends AbstractScreen {
         stage.act(delta);
         stage.draw();
         calculateEnemies();
-        while (missiles.size() < numberOfEnemies) {
+        while (projectiles.size() < numberOfEnemies) {
             Missile m = createMissile();
-            missiles.add(m);
+            projectiles.add(m);
             stage.addActor(m);
         }
 
@@ -71,8 +72,8 @@ public class GameScreen extends AbstractScreen {
         }
 
         stage.updateHitboxes();
-        stage.checkMissileCollision(missiles);
-        stage.moveProjectiles(counter, range, missiles);
+        stage.checkMissileCollision(projectiles);
+        stage.moveProjectiles(counter, range, projectiles);
         counter++;
         score++;
 
