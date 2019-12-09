@@ -7,6 +7,7 @@ import com.cucubananas.core.PotassiumOverload.GameState;
 import com.cucubananas.core.actor.Background;
 import com.cucubananas.core.actor.*;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +25,7 @@ public class GameScreen extends AbstractScreen {
         super(game);
         stage = new CustomStage();
         range = 10;
-        score = 200;
+        score = 400;
         missiles = new ArrayList<>();
         player = new Player(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
         stage.addActor(new Background());
@@ -93,7 +94,7 @@ public class GameScreen extends AbstractScreen {
 
     private Missile createMissile() {
         Missile missile;
-        double dir = Math.random();
+        double dir = new SecureRandom().nextDouble();
 
         if (dir < 0.5) {
             missile = new Missile(0, getRandomYPos(), range);
@@ -108,14 +109,16 @@ public class GameScreen extends AbstractScreen {
 
 
     private int getRandomYPos() {
-        return (int) (Math.random() * Gdx.graphics.getWidth() + 1);
+        double random = new SecureRandom().nextDouble();
+        return (int) (random * Gdx.graphics.getWidth() + 1);
     }
 
     public static int calculateWeight(int range) {
-        return (int) (Math.random() * range);
+        double random = new SecureRandom().nextDouble();
+        return (int) (random * range);
     }
 
     private void calculateEnemies() {
-        numberOfEnemies = score / 100;
+        numberOfEnemies = score / 400;
     }
 }

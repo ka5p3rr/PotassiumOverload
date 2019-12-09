@@ -53,7 +53,7 @@ public class CustomStage extends Stage {
                     case left:
                         a.setX(a.getX() - 2);
                         a.setY(a.getY() + getRandomYVariation((Missile) a, counter));
-                        if(a.getY() + ((Missile) a).getTextureHeight() >= Gdx.graphics.getHeight()) a.setY(Gdx.graphics.getHeight() - ((Missile) a).getTextureHeight());
+                        if(a.getY() + ((Missile) a).getTextureHeight() >= Gdx.graphics.getHeight()) a.setY(((float) Gdx.graphics.getHeight()) - ((Missile) a).getTextureHeight());
                         if(a.getY() <= 0) a.setY(0);
                         if (a.getX() <= 0 || a.getX() >= Gdx.graphics.getWidth()) {
                             this.getRoot().removeActor(a);
@@ -64,7 +64,7 @@ public class CustomStage extends Stage {
                     case right:
                         a.setX(a.getX() + 2);
                         a.setY(a.getY() + getRandomYVariation((Missile) a, counter));
-                        if(a.getY() + ((Missile) a).getTextureHeight() >= Gdx.graphics.getHeight()) a.setY(Gdx.graphics.getHeight() - ((Missile) a).getTextureHeight());
+                        if(a.getY() + ((Missile) a).getTextureHeight() >= Gdx.graphics.getHeight()) a.setY(((float) Gdx.graphics.getHeight())  - ((Missile) a).getTextureHeight());
                         if(a.getY() <= 0) a.setY(0);
                         if (a.getX() <= 0 || a.getX() >= Gdx.graphics.getWidth()) {
                             this.getRoot().removeActor(a);
