@@ -122,7 +122,7 @@ public class GameScreen extends AbstractScreen {
         player.setScore(player.getScore() + 1);
         missileHealth += 0.001;
         renderScore();
-        if (hBar.updateHealth()) game.setScreen(new GameOverScreen(game));
+        if (hBar.updateHealth()) game.setScreen(new GameOverScreen(game, player.getScore()));
     }
 
     private void renderScore() {
