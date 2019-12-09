@@ -4,8 +4,8 @@ public class Missile extends Projectile {
 
     private int weight;
 
-    public Missile(int x, int y, int weight) {
-        super("bird.png", x, y, 100);
+    public Missile(int x, int y, int weight, float health) {
+        super("bird.png", x, y, health);
         this.weight = weight;
 
     }

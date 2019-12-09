@@ -2,7 +2,14 @@ package com.cucubananas.core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.cucubananas.core.PotassiumOverload.GameState;
 import com.cucubananas.core.actor.Background;
 import com.cucubananas.core.actor.Bullet;
@@ -10,6 +17,7 @@ import com.cucubananas.core.actor.Missile;
 import com.cucubananas.core.actor.MoveableObject;
 import com.cucubananas.core.actor.Player;
 
+import java.awt.*;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +28,15 @@ public class GameScreen extends AbstractScreen {
     private Player player;
     private List<Missile> missiles;
     private List<Bullet> bullets;
-    private int range, numberOfEnemies, score;
+    private int range, numberOfEnemies;
     private static Integer counter = 0;
+    private static float missileHealth = 10f;
+    private HealthBar hBar;
 
     public GameScreen(PotassiumOverload game) {
         super(game);
         stage = new CustomStage();
         range = 10;
-        score = 200;
         missiles = new ArrayList<>();
         bullets = new ArrayList<>();
         player = new Player(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
@@ -39,6 +48,8 @@ public class GameScreen extends AbstractScreen {
         missiles.add(m2);
         stage.addActor(m1);
         stage.addActor(m2);
+        hBar = new HealthBar(player);
+        stage.addActor(hBar);
     }
 
     @Override
@@ -47,6 +58,7 @@ public class GameScreen extends AbstractScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
+        hBar.draw();
         calculateEnemies();
 
         while (missiles.size() < numberOfEnemies) {
@@ -85,8 +97,7 @@ public class GameScreen extends AbstractScreen {
         stage.checkPlayerToMissileCollision(missiles);
         stage.checkBulletToMissileCollision(missiles, bullets);
 
-        counter++;
-        score++;
+        advanceGame();
 
         // TODO uncomment once Projectile and Collectibles are implemented
     /*
@@ -94,6 +105,33 @@ public class GameScreen extends AbstractScreen {
     stage.checkCollectiblesCollision();
      */
 
+    }
+//
+//    private void renderHealthBar() {
+//        Gdx.gl.glEnable(GL20.GL_BLEND);
+//        healthBarRenderer.setProjectionMatrix(camera.combined);
+//        healthBarRenderer.begin(ShapeRenderer.ShapeType.Filled);
+//        healthBarRenderer.setColor(new Color(0, 1, 0, 0.2f));
+//        healthBarRenderer.rect(hBar.xSrc, hBar.ySrc, hBar.width, hBar.height);
+//        healthBarRenderer.end();
+//        Gdx.gl.glDisable(GL20.GL_BLEND);
+//    }
+
+    private void advanceGame() {
+        counter++;
+        player.setScore(player.getScore() + 1);
+        missileHealth += 0.001;
+        renderScore();
+        if (hBar.updateHealth()) game.setScreen(new GameOverScreen(game));
+    }
+
+    private void renderScore() {
+        batch.begin();
+        font.setColor(Color.GOLD);
+        GlyphLayout glyph = new GlyphLayout();
+        glyph.setText(font, Integer.toString(player.getScore()));
+        font.draw(batch, Integer.toString(player.getScore()), 50 - glyph.width / 2, Gdx.graphics.getHeight() - 40);
+        batch.end();
     }
 
     public void resetGame() {
@@ -106,10 +144,10 @@ public class GameScreen extends AbstractScreen {
         double dir = new SecureRandom().nextDouble();
 
         if (dir < 0.5) {
-            missile = new Missile(0, getRandomYPos(), range);
+            missile = new Missile(0, getRandomYPos(), range, missileHealth);
             missile.setDirection(MoveableObject.FACING_DIRECTIONS_RIGHT);
         } else {
-            missile = new Missile(Gdx.graphics.getWidth(), getRandomYPos(), range);
+            missile = new Missile(Gdx.graphics.getWidth(), getRandomYPos(), range, missileHealth);
             missile.setDirection(MoveableObject.FACING_DIRECTIONS_LEFT);
         }
         return missile;
@@ -126,6 +164,47 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void calculateEnemies() {
-        numberOfEnemies = score / 400;
+        numberOfEnemies = player.getScore() / 400;
     }
+
+    private static class HealthBar extends Actor {
+        private Player player;
+        public float width, height, greenWidth;
+        private ShapeRenderer hBarRenderer;
+
+        public HealthBar(Player player) {
+            hBarRenderer = new ShapeRenderer();
+            this.player = player;
+            // Left-most X coordinate
+            setX(Gdx.graphics.getWidth() / 10);
+            // Y bottom coordinate
+            setY(Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 10));
+            // Overall width of bar when at 100%
+            width = Gdx.graphics.getWidth() - getX() * 2;
+            // Y top coordinate
+            height = 40f;
+            // Portion of bar to be rendered green and red
+            greenWidth = 100f;
+        }
+
+        public void draw() {
+            float boundary = width / 100 * greenWidth;
+            Gdx.gl.glEnable(GL20.GL_BLEND);
+            hBarRenderer.setProjectionMatrix(getStage().getCamera().combined);
+            hBarRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            hBarRenderer.setColor(new Color(0, 1, 0, 0.2f));
+            hBarRenderer.rect(getX(), getY(), boundary, height);
+            hBarRenderer.setColor(new Color(1, 0, 0, 0.2f));
+            hBarRenderer.rect(Gdx.graphics.getWidth() - getX() - (width - boundary), getY(), width - boundary, height);
+            hBarRenderer.end();
+            Gdx.gl.glDisable(GL20.GL_BLEND);
+        }
+
+        public boolean updateHealth() {
+            greenWidth = player.getHealth();
+            if (player.getHealth() > 0) return false;
+            else return true;
+        }
+    }
+
 }

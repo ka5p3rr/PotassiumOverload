@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.cucubananas.core.actor.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomStage extends Stage {
@@ -23,6 +22,7 @@ public class CustomStage extends Stage {
         for (Actor a : this.getActors()) {
             if (a instanceof Missile) {
                 if (player.checkCollision((Missile) a)) {
+                    player.setHealth(player.getHealth() - 10);
                     this.getRoot().removeActor(a);
                     missiles.remove(a);
                 }
@@ -39,8 +39,12 @@ public class CustomStage extends Stage {
                     Actor b = this.getActors().get(x);
                     if (b instanceof Bullet) {
                         if (((Missile) a).checkCollision((Bullet) b)) {
-                            this.getRoot().removeActor(a);
-                            missiles.remove(a);
+                            ((Missile) a).setHealth(((Missile) a).getHealth() - 10);
+                            if (((Missile) a).getHealth() <= 0) {
+                                this.getRoot().removeActor(a);
+                                missiles.remove(a);
+                                player.setScore(player.getScore() + 50);
+                            }
                             this.getRoot().removeActor(b);
                             bullets.remove(b);
                         }
@@ -50,8 +54,6 @@ public class CustomStage extends Stage {
         }
         System.gc();
     }
-
-
 
         /*
         //TODO uncomment once Projectile and Collectibles are implemented
