@@ -130,7 +130,7 @@ public class GameScreen extends AbstractScreen {
         font.setColor(Color.GOLD);
         GlyphLayout glyph = new GlyphLayout();
         glyph.setText(font, Integer.toString(player.getScore()));
-        font.draw(batch, Integer.toString(player.getScore()), 50 - glyph.width / 2, Gdx.graphics.getHeight() - 40);
+        font.draw(batch, Integer.toString(player.getScore()), (float) 50 - glyph.width / 2, (float) Gdx.graphics.getHeight() - 40);
         batch.end();
     }
 
@@ -169,16 +169,16 @@ public class GameScreen extends AbstractScreen {
 
     private static class HealthBar extends Actor {
         private Player player;
-        public float width, height, greenWidth;
+        private float width, height, greenWidth;
         private ShapeRenderer hBarRenderer;
 
         public HealthBar(Player player) {
             hBarRenderer = new ShapeRenderer();
             this.player = player;
             // Left-most X coordinate
-            setX(Gdx.graphics.getWidth() / 10);
+            setX(Gdx.graphics.getWidth() / (float) 10);
             // Y bottom coordinate
-            setY(Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 10));
+            setY(Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / (float) 10));
             // Overall width of bar when at 100%
             width = Gdx.graphics.getWidth() - getX() * 2;
             // Y top coordinate
