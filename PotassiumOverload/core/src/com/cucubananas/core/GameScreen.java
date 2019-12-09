@@ -11,17 +11,10 @@ import com.cucubananas.core.actor.Bullet;
 import com.cucubananas.core.actor.MoveableObject;
 import com.cucubananas.core.actor.Player;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class GameScreen extends AbstractScreen {
 
-  private Logger logger = Logger.getLogger(PotassiumOverload.class.getName());
   private CustomStage stage;
   private Player player;
-  private OrthographicCamera camera;
-  int padding;
-  int state;
 
   public GameScreen(PotassiumOverload game) {
     super(game);
