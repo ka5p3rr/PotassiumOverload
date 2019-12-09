@@ -14,11 +14,6 @@ public class Player extends AnimatedMoveableObject {
   private static final String DOWN = "DOWN";
   private static final String UP = "UP";
   private static final String SHOOTING = "SHOOTING";
-  private static final String LEFT = "LEFT";
-  private static final String RIGHT = "RIGHT";
-
-  private String xState;
-  private String yState;
   private static final float MOVEMENT = 4;
 
   public Player(float x, float y) {

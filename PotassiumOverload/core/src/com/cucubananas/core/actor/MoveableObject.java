@@ -19,39 +19,37 @@ import java.util.Map;
  */
 public abstract class MoveableObject extends Actor {
 
-    float x, y;
-    Texture texture;
-    Rectangle hitbox;
-    private FACING_DIRECTIONS direction;
+    protected Texture texture;
+    protected Rectangle hitbox;
+    protected String xState;
+    protected String yState;
 
-    protected static final Map<FACING_DIRECTIONS, Boolean> DIR_TO_ROTATION = new HashMap<>();
+    protected static final Map<String, Boolean> DIR_TO_ROTATION = new HashMap<>();
+    protected static final String LEFT = "LEFT";
+    protected static final String RIGHT = "RIGHT";
 
     static {
-        DIR_TO_ROTATION.put(FACING_DIRECTIONS.left, true);
-        DIR_TO_ROTATION.put(FACING_DIRECTIONS.right, false);
+        DIR_TO_ROTATION.put(LEFT, false);
+        DIR_TO_ROTATION.put(RIGHT, true);
     }
-
-    public enum FACING_DIRECTIONS {left, right;}
 
     public MoveableObject(String texturePath, float xPos, float yPos) {
         texture = new Texture(texturePath);
-        direction = FACING_DIRECTIONS.right;
+        xState = RIGHT;
         this.setX(xPos);
         this.setY(yPos);
-        x = xPos;
-        y = yPos;
         hitbox = new Rectangle();
         hitbox.x = xPos;
         hitbox.y = yPos;
         hitbox.width = texture.getWidth();
         hitbox.height = texture.getHeight();
-        setBounds(x, y, texture.getWidth(), texture.getHeight());
+        setBounds(getX(), getY(), texture.getWidth(), texture.getHeight());
     }
 
     @Override
     public void draw(Batch batch, float alpha){
         batch.draw(texture, this.getX(), this.getY(), (float) texture.getWidth(), (float) texture.getHeight(), (int) this.getOriginX(), (int) this.getOriginY(),
-                (int) this.getWidth(), (int) this.getHeight(), DIR_TO_ROTATION.get(direction), false);
+                (int) this.getWidth(), (int) this.getHeight(), DIR_TO_ROTATION.get(xState), false);
     }
 
     public void updateHitbox() {
@@ -63,12 +61,14 @@ public abstract class MoveableObject extends Actor {
         return hitbox;
     }
 
-    public FACING_DIRECTIONS getDirection() {
-        return direction;
+    public String getXState() {
+        return xState;
     }
 
-    public void setDirection(FACING_DIRECTIONS direction) {
-        this.direction = direction;
+    public String getYState() { return yState; }
+
+    public void setDirection(String direction) {
+        this.xState = direction;
     }
 
     public String getTextureName() {
@@ -78,4 +78,5 @@ public abstract class MoveableObject extends Actor {
     public boolean checkCollision(MoveableObject mo) {
         return this.getHitbox().overlaps(mo.getHitbox());
     }
+
 }
