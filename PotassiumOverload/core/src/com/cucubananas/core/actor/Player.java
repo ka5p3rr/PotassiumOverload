@@ -15,6 +15,7 @@ public class Player extends AnimatedMoveableObject {
   private static final String UP = "UP";
   private static final String SHOOTING = "SHOOTING";
   private static final float MOVEMENT = 4;
+  private int shootingDuration = 0;
 
   public Player(float x, float y) {
     super("characterspritesheet.png", x, y);
@@ -26,36 +27,41 @@ public class Player extends AnimatedMoveableObject {
     spriteSheet.put(RIGHT + SHOOTING, new TextureRegion(texture,104,0,52,100));
     spriteSheet.put(LEFT + DOWN, new TextureRegion(texture,0,100,52,100));
     spriteSheet.put(LEFT + UP, new TextureRegion(texture,52,100,52,100));
-    spriteSheet.put(LEFT + SHOOTING, new TextureRegion(texture,104,100,52,100));
+    spriteSheet.put(LEFT + SHOOTING, new TextureRegion(texture,108,100,52,100));
     setBounds(x,y,52,100);
   }
 
   @Override
   public void draw(Batch batch, float alpha) {
     batch.draw(spriteSheet.get(xState + yState), getX(), getY(), 52, 100);
+    shootingDuration++;
   }
 
+  @Override
+  public void act(float delta) {
+    super.act(delta);
+  }
 
   public void drop() {
     if (getY() < MOVEMENT/2)
-      return;
+      setY(0);
     setY(getY() - MOVEMENT/2);
-    yState = DOWN;
+    if(shootingDuration > 10)
+      yState = DOWN;
   }
 
   public void moveDown() {
     if (getY() < MOVEMENT)
-      return;
+      setY(0);
     setY(getY() - MOVEMENT);
     yState = DOWN;
   }
 
   public void moveUp() {
-    if (getY() > Gdx.graphics.getHeight() - getHeight() - MOVEMENT)
-      return;
-
-    setY(getY() + MOVEMENT);
-    yState = UP;
+    if (getY() < Gdx.graphics.getHeight() - getHeight() - MOVEMENT)
+      setY(getY() + MOVEMENT);
+    if (shootingDuration > 10)
+      yState = UP;
   }
 
   public void moveLeft() {
@@ -65,4 +71,21 @@ public class Player extends AnimatedMoveableObject {
   public void moveRight() {
     xState = RIGHT;
   }
+
+  public void shoot() {
+    shootingDuration = 0;
+    yState = SHOOTING;
+  }
+
+  public float getShootingPositionY() {
+    return getY() + 70;
+  }
+
+  public float getShootingPositionX() {
+    if(xState == LEFT)
+      return getX() - 5;
+    else
+      return getX() + 45;
+  }
+  
 }

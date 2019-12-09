@@ -59,8 +59,10 @@ public class GameScreen extends AbstractScreen {
       player.moveRight();
     }
 
-    if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-      stage.addActor(new Bullet(player.getX(), player.getY(), player.getXState()) );
+    if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+      player.shoot();
+      stage.addActor(
+          new Bullet(player.getShootingPositionX(), player.getShootingPositionY(), player.getXState()));
     }
 
     // TODO uncomment once Projectile and Collectibles are implemented
