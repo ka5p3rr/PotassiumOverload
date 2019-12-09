@@ -1,5 +1,6 @@
 package com.cucubananas.core.actor;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 /**
@@ -8,11 +9,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
  * @author Alexis Araouzous
  */
 public class Bullet extends Projectile {
-  private static final float SPEED = 5;
+  public static final float SPEED = 5;
 
   public Bullet(float x, float y, String direction) {
-    super("bullet.png", x, y, 100);
+    super("bullet.png", x, y, 20);
     xState = direction;
+    hitbox.width = 13;
+    hitbox.height = 8;
   }
 
   @Override
@@ -20,12 +23,15 @@ public class Bullet extends Projectile {
     batch.draw(texture, getX(), getY(), 13 , 8, 0, 0, 50, 30, DIR_TO_ROTATION.get(xState), false);
   }
 
-  @Override
-  public void act(float delta) {
-    if (xState.equals(FACING_DIRECTIONS_LEFT))
-      setX(getX() - SPEED);
-    else
-      setX(getX() + SPEED);
-  }
+//  @Override
+//  public void act(float delta) {
+//    if (xState.equals(FACING_DIRECTIONS_LEFT))
+//      setX(getX() - SPEED);
+//    else
+//      setX(getX() + SPEED);
+//
+//    if(this.getX() < 0 || this.getX() > Gdx.graphics.getWidth())
+//
+//  }
   
 }

@@ -9,7 +9,6 @@ import com.cucubananas.core.actor.Bullet;
 import com.cucubananas.core.actor.Missile;
 import com.cucubananas.core.actor.MoveableObject;
 import com.cucubananas.core.actor.Player;
-import com.cucubananas.core.actor.Projectile;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -78,9 +77,14 @@ public class GameScreen extends AbstractScreen {
             player.shoot();
         }
 
-        stage.updateHitboxes();
-        stage.checkMissileCollision(missiles);
         stage.moveMissiles(counter, range, missiles);
+        stage.moveBullets(counter, range, bullets);
+
+        stage.updateHitboxes();
+
+        stage.checkPlayerToMissileCollision(missiles);
+        stage.checkBulletToMissileCollision(missiles, bullets);
+
         counter++;
         score++;
 
