@@ -8,6 +8,6 @@ package com.cucubananas.core.actor;
  */
 public class Enemy extends MoveableObject {
   public Enemy(int x, int y) {
-    super("badlogic.jpg", x, y);
+    super("badlogic.jpg", x, y, 100);
   }
 }

@@ -7,11 +7,11 @@ import com.badlogic.gdx.graphics.g2d.Batch;
  * @author Aidan Reed
  * @author Alexis Araouzous
  */
-public class Bullet extends MoveableObject {
+public class Bullet extends Projectile {
   private static final float SPEED = 5;
 
   public Bullet(float x, float y, String direction) {
-    super("bullet.png", x, y);
+    super("bullet.png", x, y, 100);
     xState = direction;
   }
 
@@ -26,6 +26,6 @@ public class Bullet extends MoveableObject {
       setX(getX() - SPEED);
     else
       setX(getX() + SPEED);
-
   }
+  
 }

@@ -14,20 +14,29 @@ public class Player extends AnimatedMoveableObject {
   private static final String DOWN = "DOWN";
   private static final String UP = "UP";
   private static final String SHOOTING = "SHOOTING";
+  private static final int WIDTH = 52;
+  private static final int HEIGHT = 100;
+
+  private String xState;
+  private String yState;
   private static final float MOVEMENT = 4;
   private int shootingDuration = 0;
 
   public Player(float x, float y) {
-    super("characterspritesheet.png", x, y);
+    this(x, y, 100);
+  }
+
+  public Player(float x, float y, float health) {
+    super("characterspritesheet.png", x, y, health, WIDTH, HEIGHT);
     xState = RIGHT;
     yState = UP;
 
-    spriteSheet.put(RIGHT + DOWN, new TextureRegion(texture,0,0,52,100));
-    spriteSheet.put(RIGHT + UP, new TextureRegion(texture,52,0,52,100));
-    spriteSheet.put(RIGHT + SHOOTING, new TextureRegion(texture,104,0,52,100));
-    spriteSheet.put(LEFT + DOWN, new TextureRegion(texture,0,100,52,100));
-    spriteSheet.put(LEFT + UP, new TextureRegion(texture,52,100,52,100));
-    spriteSheet.put(LEFT + SHOOTING, new TextureRegion(texture,108,100,52,100));
+    spriteSheet.put(RIGHT + DOWN, new TextureRegion(texture,0,0,WIDTH,HEIGHT));
+    spriteSheet.put(RIGHT + UP, new TextureRegion(texture,52,0,WIDTH,HEIGHT));
+    spriteSheet.put(RIGHT + SHOOTING, new TextureRegion(texture,104,0,WIDTH,HEIGHT));
+    spriteSheet.put(LEFT + DOWN, new TextureRegion(texture,0,100,WIDTH,HEIGHT));
+    spriteSheet.put(LEFT + UP, new TextureRegion(texture,52,100,WIDTH,HEIGHT));
+    spriteSheet.put(LEFT + SHOOTING, new TextureRegion(texture,108,100,WIDTH,HEIGHT));
     setBounds(x,y,52,100);
   }
 

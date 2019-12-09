@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +22,7 @@ public abstract class MoveableObject extends Actor {
     protected Rectangle hitbox;
     protected String xState;
     protected String yState;
+    private float health;
 
     protected static final Map<String, Boolean> DIR_TO_ROTATION = new HashMap<>();
     protected static final String LEFT = "LEFT";
@@ -33,7 +33,13 @@ public abstract class MoveableObject extends Actor {
         DIR_TO_ROTATION.put(RIGHT, true);
     }
 
-    public MoveableObject(String texturePath, float xPos, float yPos) {
+    public MoveableObject(String texturePath, float xPos, float yPos, float health, int width, int height) {
+        this(texturePath, xPos, yPos, health);
+        hitbox.width = width;
+        hitbox.height = height;
+    }
+
+    public MoveableObject(String texturePath, float xPos, float yPos, float health) {
         texture = new Texture(texturePath);
         xState = RIGHT;
         this.setX(xPos);
@@ -44,6 +50,7 @@ public abstract class MoveableObject extends Actor {
         hitbox.width = texture.getWidth();
         hitbox.height = texture.getHeight();
         setBounds(getX(), getY(), texture.getWidth(), texture.getHeight());
+        this.setHealth(health);
     }
 
     @Override
@@ -65,10 +72,24 @@ public abstract class MoveableObject extends Actor {
         return xState;
     }
 
-    public String getYState() { return yState; }
+    public String getYState() { 
+        return yState; 
+    }
 
     public void setDirection(String direction) {
         this.xState = direction;
+    }
+
+    public void setHealth(float health){
+        this.health = health;
+    }
+
+    public float getHealth(){
+        return health;
+    }
+
+    public int getTextureHeight() {
+        return texture.getHeight();
     }
 
     public String getTextureName() {
@@ -79,4 +100,11 @@ public abstract class MoveableObject extends Actor {
         return this.getHitbox().overlaps(mo.getHitbox());
     }
 
+    public void setHitboxWidth() {
+
+    }
+
+    public void setHitboxHeight() {
+
+    }
 }

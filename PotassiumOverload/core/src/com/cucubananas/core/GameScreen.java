@@ -3,9 +3,7 @@ package com.cucubananas.core;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.cucubananas.core.PotassiumOverload.GameState;
 import com.cucubananas.core.actor.Background;
 import com.cucubananas.core.actor.Bullet;
 import com.cucubananas.core.actor.MoveableObject;
@@ -15,18 +13,25 @@ public class GameScreen extends AbstractScreen {
 
   private CustomStage stage;
   private Player player;
+  private List<Projectile> projectiles;
+  private int range, numberOfEnemies, score;
+  priave static Integer counter = 0;
 
   public GameScreen(PotassiumOverload game) {
     super(game);
     stage = new CustomStage();
+    range = 10;
+    score = 200;
+    projectiles = new ArrayList<>();
     player = new Player(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
     stage.addActor(new Background());
     stage.addActor(player);
-
-    camera = new OrthographicCamera();
-    camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    padding = 50;
-    state = 0;
+    Missile m1 = createMissile();
+    Missile m2 = createMissile();
+    projectiles.add(m1);
+    projectiles.add(m2);
+    stage.addActor(m1);
+    stage.addActor(m2);
   }
 
   @Override
@@ -35,7 +40,14 @@ public class GameScreen extends AbstractScreen {
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     stage.act(delta);
     stage.draw();
-    stage.updateHitboxes();
+    calculateEnemies();
+
+    while(projectiles.size() < numberOfEnemies) {
+      Missile m = createMissile();
+      projectiles.add(m);
+      stage.addActor(m);
+    }
+
     if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
       player.moveUp();
     } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
@@ -58,6 +70,12 @@ public class GameScreen extends AbstractScreen {
           new Bullet(player.getShootingPositionX(), player.getShootingPositionY(), player.getXState()));
     }
 
+    stage.updateHitboxes();
+    stage.checkMissileCollision(projectiles);
+    stage.moveProjectiles(counter, range, projectiles);
+    counter++;
+    score++;
+
     // TODO uncomment once Projectile and Collectibles are implemented
     /*
     stage.checkProjectilesCollision();
@@ -66,41 +84,36 @@ public class GameScreen extends AbstractScreen {
 
   }
 
-  private class CustomStage extends Stage {
-    Player player;
-
-    public void updateHitboxes() {
-      for (Actor a : this.getActors()) {
-        if (a instanceof MoveableObject) {
-          ((MoveableObject) a).updateHitbox();
-        }
-      }
+    public void resetGame() {
+        logger.log(Level.INFO, "Reset Game");
+        game.changeScreen(GameState.GAME_OVER);
+        dispose();
     }
 
-    /*
-    //TODO uncomment once Projectile and Collectibles are implemented
-    public void checkProjectilesCollision() {
+    private Missile createMissile() {
+        Missile missile;
+        double dir = Math.random();
 
-        for (Actor a : this.getActors()) {
-            if (a instanceof Projectile) {
-               player.checkCollision((MoveableObject) a);
-            }
+        if (dir < 0.5) {
+            missile = new Missile(0, getRandomYPos(), range);
+            missile.setDirection(MoveableObject.FACING_DIRECTIONS.right);
+        } else {
+            missile = new Missile(Gdx.graphics.getWidth(), getRandomYPos(), range);
+            missile.setDirection(MoveableObject.FACING_DIRECTIONS.left);
         }
     }
 
-    public void checkCollectiblesCollision() {
-        for (Actor a : this.getActors()) {
-            if (a instanceof Collectible) {
-                player.checkCollision((MoveableObject) a);
-            }
-        }
+    private int getRandomYPos() {
+        double random = new SecureRandom().nextDouble();
+        return (int) (random * Gdx.graphics.getWidth() + 1);
     }
-      */
 
-    @Override
-    public void addActor(Actor actor) {
-      if (actor instanceof Player) player = (Player) actor;
-      super.addActor(actor);
+    public static int calculateWeight(int range) {
+        double random = new SecureRandom().nextDouble();
+        return (int) (random * range);
     }
-  }
+
+    private void calculateEnemies() {
+        numberOfEnemies = score / 400;
+    }
 }
