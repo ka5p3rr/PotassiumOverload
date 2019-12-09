@@ -23,6 +23,7 @@ public abstract class MoveableObject extends Actor {
     Texture texture;
     Rectangle hitbox;
     private FACING_DIRECTIONS direction;
+    private float health;
 
     protected static final Map<FACING_DIRECTIONS, Boolean> DIR_TO_ROTATION = new HashMap<>();
 
@@ -33,13 +34,20 @@ public abstract class MoveableObject extends Actor {
 
     public enum FACING_DIRECTIONS {left, right;}
 
-    public MoveableObject(String texturePath, float xPos, float yPos) {
+    public MoveableObject(String texturePath, float xPos, float yPos, float health, int width, int height) {
+        this(texturePath, xPos, yPos, health);
+        hitbox.width = width;
+        hitbox.height = height;
+    }
+
+    public MoveableObject(String texturePath, float xPos, float yPos, float health) {
         texture = new Texture(texturePath);
         direction = FACING_DIRECTIONS.right;
         this.setX(xPos);
         this.setY(yPos);
         x = xPos;
-        y = yPos;
+        y = yPos;  
+        this.setHealth(health);
         hitbox = new Rectangle();
         hitbox.x = xPos;
         hitbox.y = yPos;
@@ -71,11 +79,31 @@ public abstract class MoveableObject extends Actor {
         this.direction = direction;
     }
 
+    public void setHealth(float health){
+        this.health = health;
+    }
+
+    public float getHealth(){
+        return health;
+    }
+
+    public int getTextureHeight() {
+        return texture.getHeight();
+    }
+
     public String getTextureName() {
         return ((FileTextureData) texture.getTextureData()).getFileHandle().path();
     }
 
     public boolean checkCollision(MoveableObject mo) {
         return this.getHitbox().overlaps(mo.getHitbox());
+    }
+
+    public void setHitboxWidth() {
+
+    }
+
+    public void setHitboxHeight() {
+
     }
 }
