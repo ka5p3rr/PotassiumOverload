@@ -22,12 +22,12 @@ public class CustomStage extends Stage {
         }
     }
 
-    public void checkMissileCollision(List<Missile> missiles) {
+    public void checkMissileCollision(List<Missile> projectiles) {
         for (Actor a : this.getActors()) {
             if (a instanceof Missile) {
                 if(player.checkCollision((Missile) a)) {
                     this.getRoot().removeActor(a);
-                    missiles.remove(a);
+                    projectiles.remove(a);
                 }
             }
         }
@@ -48,10 +48,10 @@ public class CustomStage extends Stage {
 
     public void moveMissiles(Integer counter, int range, List<Missile> missiles) {
         for (Actor a : this.getActors()) {
-            if (a instanceof Projectile) {
+            if (a instanceof Missile) {
                 if (counter % 10 == 0) ((Missile) a).setWeight(GameScreen.calculateWeight(range));
                 switch (((Projectile) a).getDirection()) {
-                    case left:
+                    case MoveableObject.FACING_DIRECTIONS_LEFT:
                         a.setX(a.getX() - 2);
                         a.setY(a.getY() + getRandomYVariation((Missile) a, counter));
                         if(a.getY() + ((Missile) a).getTextureHeight() >= Gdx.graphics.getHeight()) a.setY(((float) Gdx.graphics.getHeight()) - ((Missile) a).getTextureHeight());
@@ -62,7 +62,7 @@ public class CustomStage extends Stage {
                         }
 
                             break;
-                    case right:
+                    case MoveableObject.FACING_DIRECTIONS_RIGHT:
                         a.setX(a.getX() + 2);
                         a.setY(a.getY() + getRandomYVariation((Missile) a, counter));
                         if(a.getY() + ((Missile) a).getTextureHeight() >= Gdx.graphics.getHeight()) a.setY(((float) Gdx.graphics.getHeight())  - ((Missile) a).getTextureHeight());

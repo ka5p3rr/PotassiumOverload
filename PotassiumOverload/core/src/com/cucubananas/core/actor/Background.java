@@ -8,15 +8,15 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Background extends Actor {
 
-  Texture background;
+  Texture texture;
   int width;
   int height;
   float sourceX;
 
 
   public Background(){
-    background = new Texture("cyberv1.png");
-    background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+    texture = new Texture("cyberv1.png");
+    texture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 
     width = Gdx.graphics.getWidth();
     height = Gdx.graphics.getHeight();
@@ -25,7 +25,7 @@ public class Background extends Actor {
 
   @Override
   public void draw(Batch batch, float alpha) {
-    batch.draw(background, 0, 0, (int) sourceX, 0, width, height);
+    batch.draw(texture, 0, 0, (int) sourceX, 0, width, height);
   }
 
   @Override

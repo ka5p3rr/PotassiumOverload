@@ -5,20 +5,22 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.cucubananas.core.PotassiumOverload.GameState;
 import com.cucubananas.core.actor.Background;
-import com.cucubananas.core.actor.*;
+import com.cucubananas.core.actor.Bullet;
+import com.cucubananas.core.actor.Missile;
+import com.cucubananas.core.actor.MoveableObject;
+import com.cucubananas.core.actor.Player;
+import com.cucubananas.core.actor.Projectile;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class GameScreen extends AbstractScreen {
 
-    private Logger logger = Logger.getLogger(PotassiumOverload.class.getName());
     private CustomStage stage;
     private Player player;
     private List<Missile> missiles;
+    private List<Bullet> bullets;
     private int range, numberOfEnemies, score;
     private static Integer counter = 0;
 
@@ -26,8 +28,9 @@ public class GameScreen extends AbstractScreen {
         super(game);
         stage = new CustomStage();
         range = 10;
-        score = 400;
+        score = 200;
         missiles = new ArrayList<>();
+        bullets = new ArrayList<>();
         player = new Player(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
         stage.addActor(new Background());
         stage.addActor(player);
@@ -46,6 +49,7 @@ public class GameScreen extends AbstractScreen {
         stage.act(delta);
         stage.draw();
         calculateEnemies();
+
         while (missiles.size() < numberOfEnemies) {
             Missile m = createMissile();
             missiles.add(m);
@@ -68,8 +72,10 @@ public class GameScreen extends AbstractScreen {
             player.moveRight();
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            logger.log(Level.INFO, "SPACE");
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            stage.addActor(
+                    new Bullet(player.getShootingPositionX(), player.getShootingPositionY(), player.getXState()));
+            player.shoot();
         }
 
         stage.updateHitboxes();
@@ -78,17 +84,15 @@ public class GameScreen extends AbstractScreen {
         counter++;
         score++;
 
-
-        //TODO uncomment once Projectile and Collectibles are implemented
-        /*
-        stage.checkProjectilesCollision();
-        stage.checkCollectiblesCollision();
-         */
+        // TODO uncomment once Projectile and Collectibles are implemented
+    /*
+    stage.checkProjectilesCollision();
+    stage.checkCollectiblesCollision();
+     */
 
     }
 
     public void resetGame() {
-        logger.log(Level.INFO, "Reset Game");
         game.changeScreen(GameState.GAME_OVER);
         dispose();
     }
@@ -99,15 +103,13 @@ public class GameScreen extends AbstractScreen {
 
         if (dir < 0.5) {
             missile = new Missile(0, getRandomYPos(), range);
-            missile.setDirection(MoveableObject.FACING_DIRECTIONS.right);
+            missile.setDirection(MoveableObject.FACING_DIRECTIONS_RIGHT);
         } else {
             missile = new Missile(Gdx.graphics.getWidth(), getRandomYPos(), range);
-            missile.setDirection(MoveableObject.FACING_DIRECTIONS.left);
+            missile.setDirection(MoveableObject.FACING_DIRECTIONS_LEFT);
         }
-
         return missile;
     }
-
 
     private int getRandomYPos() {
         double random = new SecureRandom().nextDouble();

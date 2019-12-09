@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,20 +18,20 @@ import java.util.Map;
  */
 public abstract class MoveableObject extends Actor {
 
-    float x, y;
-    Texture texture;
-    Rectangle hitbox;
-    private FACING_DIRECTIONS direction;
+    protected Texture texture;
+    protected Rectangle hitbox;
+    protected String xState;
+    protected String yState;
     private float health;
 
-    protected static final Map<FACING_DIRECTIONS, Boolean> DIR_TO_ROTATION = new HashMap<>();
+    protected static final Map<String, Boolean> DIR_TO_ROTATION = new HashMap<>();
+    public static final String FACING_DIRECTIONS_LEFT = "LEFT";
+    public static final String FACING_DIRECTIONS_RIGHT = "FACING_DIRECTIONS_RIGHT";
 
     static {
-        DIR_TO_ROTATION.put(FACING_DIRECTIONS.left, true);
-        DIR_TO_ROTATION.put(FACING_DIRECTIONS.right, false);
+        DIR_TO_ROTATION.put(FACING_DIRECTIONS_LEFT, true);
+        DIR_TO_ROTATION.put(FACING_DIRECTIONS_RIGHT, false);
     }
-
-    public enum FACING_DIRECTIONS {left, right;}
 
     public MoveableObject(String texturePath, float xPos, float yPos, float health, int width, int height) {
         this(texturePath, xPos, yPos, health);
@@ -42,24 +41,22 @@ public abstract class MoveableObject extends Actor {
 
     public MoveableObject(String texturePath, float xPos, float yPos, float health) {
         texture = new Texture(texturePath);
-        direction = FACING_DIRECTIONS.right;
+        xState = FACING_DIRECTIONS_RIGHT;
         this.setX(xPos);
         this.setY(yPos);
-        x = xPos;
-        y = yPos;  
-        this.setHealth(health);
         hitbox = new Rectangle();
         hitbox.x = xPos;
         hitbox.y = yPos;
         hitbox.width = texture.getWidth();
         hitbox.height = texture.getHeight();
-        setBounds(x, y, texture.getWidth(), texture.getHeight());
+        setBounds(getX(), getY(), texture.getWidth(), texture.getHeight());
+        this.setHealth(health);
     }
 
     @Override
     public void draw(Batch batch, float alpha){
         batch.draw(texture, this.getX(), this.getY(), (float) texture.getWidth(), (float) texture.getHeight(), (int) this.getOriginX(), (int) this.getOriginY(),
-                (int) this.getWidth(), (int) this.getHeight(), DIR_TO_ROTATION.get(direction), false);
+                (int) this.getWidth(), (int) this.getHeight(), DIR_TO_ROTATION.get(xState), false);
     }
 
     public void updateHitbox() {
@@ -71,12 +68,20 @@ public abstract class MoveableObject extends Actor {
         return hitbox;
     }
 
-    public FACING_DIRECTIONS getDirection() {
-        return direction;
+    public String getXState() {
+        return xState;
     }
 
-    public void setDirection(FACING_DIRECTIONS direction) {
-        this.direction = direction;
+    public String getYState() { 
+        return yState; 
+    }
+
+    public void setDirection(String direction) {
+        this.xState = direction;
+    }
+
+    public String getDirection() {
+        return xState;
     }
 
     public void setHealth(float health){
