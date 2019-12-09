@@ -22,7 +22,7 @@ public class Bullet extends MoveableObject {
 
   @Override
   public void act(float delta) {
-    if (xState == LEFT)
+    if (xState.equals(LEFT))
       setX(getX() - SPEED);
     else
       setX(getX() + SPEED);

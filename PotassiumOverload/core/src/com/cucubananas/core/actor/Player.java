@@ -82,10 +82,10 @@ public class Player extends AnimatedMoveableObject {
   }
 
   public float getShootingPositionX() {
-    if(xState == LEFT)
+    if(xState.equals(LEFT))
       return getX() - 5;
     else
       return getX() + 45;
   }
-  
+
 }
