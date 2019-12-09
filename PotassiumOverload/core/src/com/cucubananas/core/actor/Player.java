@@ -16,9 +16,6 @@ public class Player extends AnimatedMoveableObject {
   private static final String SHOOTING = "SHOOTING";
   private static final int WIDTH = 52;
   private static final int HEIGHT = 100;
-
-  private String xState;
-  private String yState;
   private static final float MOVEMENT = 4;
   private int shootingDuration = 0;
 
@@ -28,15 +25,15 @@ public class Player extends AnimatedMoveableObject {
 
   public Player(float x, float y, float health) {
     super("characterspritesheet.png", x, y, health, WIDTH, HEIGHT);
-    xState = RIGHT;
+    xState = FACING_DIRECTIONS_RIGHT;
     yState = UP;
 
-    spriteSheet.put(RIGHT + DOWN, new TextureRegion(texture,0,0,WIDTH,HEIGHT));
-    spriteSheet.put(RIGHT + UP, new TextureRegion(texture,52,0,WIDTH,HEIGHT));
-    spriteSheet.put(RIGHT + SHOOTING, new TextureRegion(texture,104,0,WIDTH,HEIGHT));
-    spriteSheet.put(LEFT + DOWN, new TextureRegion(texture,0,100,WIDTH,HEIGHT));
-    spriteSheet.put(LEFT + UP, new TextureRegion(texture,52,100,WIDTH,HEIGHT));
-    spriteSheet.put(LEFT + SHOOTING, new TextureRegion(texture,108,100,WIDTH,HEIGHT));
+    spriteSheet.put(FACING_DIRECTIONS_RIGHT + DOWN, new TextureRegion(texture,0,0,WIDTH,HEIGHT));
+    spriteSheet.put(FACING_DIRECTIONS_RIGHT + UP, new TextureRegion(texture,52,0,WIDTH,HEIGHT));
+    spriteSheet.put(FACING_DIRECTIONS_RIGHT + SHOOTING, new TextureRegion(texture,104,0,WIDTH,HEIGHT));
+    spriteSheet.put(FACING_DIRECTIONS_LEFT + DOWN, new TextureRegion(texture,0,100,WIDTH,HEIGHT));
+    spriteSheet.put(FACING_DIRECTIONS_LEFT + UP, new TextureRegion(texture,52,100,WIDTH,HEIGHT));
+    spriteSheet.put(FACING_DIRECTIONS_LEFT + SHOOTING, new TextureRegion(texture,108,100,WIDTH,HEIGHT));
     setBounds(x,y,52,100);
   }
 
@@ -74,11 +71,11 @@ public class Player extends AnimatedMoveableObject {
   }
 
   public void moveLeft() {
-    xState = LEFT;
+    xState = FACING_DIRECTIONS_LEFT;
   }
 
   public void moveRight() {
-    xState = RIGHT;
+    xState = FACING_DIRECTIONS_RIGHT;
   }
 
   public void shoot() {
@@ -91,7 +88,7 @@ public class Player extends AnimatedMoveableObject {
   }
 
   public float getShootingPositionX() {
-    if(xState.equals(LEFT))
+    if(xState.equals(FACING_DIRECTIONS_LEFT))
       return getX() - 5;
     else
       return getX() + 45;

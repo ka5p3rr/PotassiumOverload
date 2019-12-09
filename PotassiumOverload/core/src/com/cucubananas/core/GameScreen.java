@@ -6,8 +6,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.cucubananas.core.PotassiumOverload.GameState;
 import com.cucubananas.core.actor.Background;
 import com.cucubananas.core.actor.Bullet;
+import com.cucubananas.core.actor.Missile;
 import com.cucubananas.core.actor.MoveableObject;
 import com.cucubananas.core.actor.Player;
+import com.cucubananas.core.actor.Projectile;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameScreen extends AbstractScreen {
 
@@ -15,7 +20,7 @@ public class GameScreen extends AbstractScreen {
   private Player player;
   private List<Projectile> projectiles;
   private int range, numberOfEnemies, score;
-  priave static Integer counter = 0;
+  private static Integer counter = 0;
 
   public GameScreen(PotassiumOverload game) {
     super(game);
@@ -65,9 +70,9 @@ public class GameScreen extends AbstractScreen {
     }
 
     if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-      player.shoot();
       stage.addActor(
           new Bullet(player.getShootingPositionX(), player.getShootingPositionY(), player.getXState()));
+      player.shoot();
     }
 
     stage.updateHitboxes();
@@ -85,7 +90,6 @@ public class GameScreen extends AbstractScreen {
   }
 
     public void resetGame() {
-        logger.log(Level.INFO, "Reset Game");
         game.changeScreen(GameState.GAME_OVER);
         dispose();
     }
@@ -96,11 +100,12 @@ public class GameScreen extends AbstractScreen {
 
         if (dir < 0.5) {
             missile = new Missile(0, getRandomYPos(), range);
-            missile.setDirection(MoveableObject.FACING_DIRECTIONS.right);
+            missile.setDirection(MoveableObject.FACING_DIRECTIONS_LEFT);
         } else {
             missile = new Missile(Gdx.graphics.getWidth(), getRandomYPos(), range);
-            missile.setDirection(MoveableObject.FACING_DIRECTIONS.left);
+            missile.setDirection(MoveableObject.FACING_DIRECTIONS_RIGHT);
         }
+        return missile;
     }
 
     private int getRandomYPos() {

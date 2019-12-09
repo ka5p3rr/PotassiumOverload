@@ -25,12 +25,12 @@ public abstract class MoveableObject extends Actor {
     private float health;
 
     protected static final Map<String, Boolean> DIR_TO_ROTATION = new HashMap<>();
-    protected static final String LEFT = "LEFT";
-    protected static final String RIGHT = "RIGHT";
+    public static final String FACING_DIRECTIONS_LEFT = "LEFT";
+    public static final String FACING_DIRECTIONS_RIGHT = "FACING_DIRECTIONS_RIGHT";
 
     static {
-        DIR_TO_ROTATION.put(LEFT, false);
-        DIR_TO_ROTATION.put(RIGHT, true);
+        DIR_TO_ROTATION.put(FACING_DIRECTIONS_LEFT, false);
+        DIR_TO_ROTATION.put(FACING_DIRECTIONS_RIGHT, true);
     }
 
     public MoveableObject(String texturePath, float xPos, float yPos, float health, int width, int height) {
@@ -41,7 +41,7 @@ public abstract class MoveableObject extends Actor {
 
     public MoveableObject(String texturePath, float xPos, float yPos, float health) {
         texture = new Texture(texturePath);
-        xState = RIGHT;
+        xState = FACING_DIRECTIONS_RIGHT;
         this.setX(xPos);
         this.setY(yPos);
         hitbox = new Rectangle();
@@ -78,6 +78,10 @@ public abstract class MoveableObject extends Actor {
 
     public void setDirection(String direction) {
         this.xState = direction;
+    }
+
+    public String getDirection() {
+        return xState;
     }
 
     public void setHealth(float health){

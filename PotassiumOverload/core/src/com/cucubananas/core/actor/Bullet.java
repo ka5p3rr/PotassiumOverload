@@ -22,7 +22,7 @@ public class Bullet extends Projectile {
 
   @Override
   public void act(float delta) {
-    if (xState.equals(LEFT))
+    if (xState.equals(FACING_DIRECTIONS_LEFT))
       setX(getX() - SPEED);
     else
       setX(getX() + SPEED);
