@@ -4,9 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -24,6 +21,7 @@ import java.util.List;
 public class GameScreen extends AbstractScreen {
 
     protected static Integer randomisationCounter = 0;
+    protected static int randomisationRange = 10;
     protected static float missileHealth = 10f;
     protected static int numberOfEnemies = 2;
 
@@ -32,14 +30,12 @@ public class GameScreen extends AbstractScreen {
     private List<Missile> missiles;
     private List<Bullet> bullets;
     private HealthBar hBar;
-    private int range;
 
     public GameScreen(PotassiumOverload game) {
         super(game);
-        stage = new CustomStage(missiles, bullets);
-        range = 10;
         missiles = new ArrayList<>();
         bullets = new ArrayList<>();
+        stage = new CustomStage(missiles, bullets);
         player = new Player(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
         stage.addActor(new Background());
         stage.addActor(player);
@@ -85,13 +81,14 @@ public class GameScreen extends AbstractScreen {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            stage.addActor(
-                    new Bullet(player.getShootingPositionX(), player.getShootingPositionY(), player.getXState()));
+            Bullet b = new Bullet(player.getShootingPositionX(), player.getShootingPositionY(), player.getXState());
+            bullets.add(b);
+            stage.addActor(b);
             player.shoot();
         }
 
         // Updates game state and returns false if player health <= 0
-        if (!stage.updateGameState(randomisationCounter, range, bullets, missiles))
+        if (!stage.updateGameState())
             game.setScreen(new GameOverScreen(game, player.getScore()));
 
     }
@@ -115,10 +112,10 @@ public class GameScreen extends AbstractScreen {
         double dir = new SecureRandom().nextDouble();
 
         if (dir < 0.5) {
-            missile = new Missile(0, getRandomYPos(), range, missileHealth);
+            missile = new Missile(0, getRandomYPos(), randomisationRange, missileHealth);
             missile.setDirection(MoveableObject.FACING_DIRECTIONS_RIGHT);
         } else {
-            missile = new Missile(Gdx.graphics.getWidth(), getRandomYPos(), range, missileHealth);
+            missile = new Missile(Gdx.graphics.getWidth(), getRandomYPos(), randomisationRange, missileHealth);
             missile.setDirection(MoveableObject.FACING_DIRECTIONS_LEFT);
         }
         return missile;
