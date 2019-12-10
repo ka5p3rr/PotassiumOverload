@@ -9,8 +9,47 @@ import java.util.List;
 
 public class CustomStage extends Stage {
     Player player;
+    List<Missile> missiles;
+    List<Bullet> bullets;
 
-    public void updateHitboxes() {
+    public CustomStage(  List<Missile> missiles, List<Bullet> bullets) {
+        super();
+        this.missiles = missiles;
+        this.bullets = bullets;
+    }
+
+    @Override
+    public void addActor(Actor actor) {
+        if (actor instanceof Player) player = (Player) actor;
+        super.addActor(actor);
+    }
+
+    public boolean updateGameState(Integer counter, int range, List<Bullet> bullets, List<Missile> missiles) {
+        moveMissiles(counter, range, missiles);
+        moveBullets(counter, range, bullets);
+        updateHitboxes();
+        checkPlayerToMissileCollision(missiles);
+        checkBulletToMissileCollision(missiles, bullets);
+
+        // Increase score
+        player.setScore(player.getScore() + 1);
+
+        // Make game harder by increasing randomisation, number of missiles and their health
+        GameScreen.randomisationCounter++;
+        GameScreen.missileHealth += 0.001;
+        calculateEnemies();
+        // TODO uncomment once Collectibles are implemented
+         /*
+        checkPlayerToCollectiblesCollision();
+         */
+
+        System.gc();
+
+        if(player.getHealth() <= 0 ) return false;
+        else return true;
+    }
+
+    private void updateHitboxes() {
         for (Actor a : this.getActors()) {
             if (a instanceof MoveableObject) {
                 ((MoveableObject) a).updateHitbox();
@@ -18,7 +57,7 @@ public class CustomStage extends Stage {
         }
     }
 
-    public void checkPlayerToMissileCollision(List<Missile> missiles) {
+    private void checkPlayerToMissileCollision(List<Missile> missiles) {
         for (Actor a : this.getActors()) {
             if (a instanceof Missile) {
                 if (player.checkCollision((Missile) a)) {
@@ -28,10 +67,9 @@ public class CustomStage extends Stage {
                 }
             }
         }
-        System.gc();
     }
 
-    public void checkBulletToMissileCollision(List<Missile> missiles, List<Bullet> bullets) {
+    private void checkBulletToMissileCollision(List<Missile> missiles, List<Bullet> bullets) {
         for (int i = 0; i < this.getActors().size; i++) {
             Actor a = this.getActors().get(i);
             if (a instanceof Missile) {
@@ -52,7 +90,6 @@ public class CustomStage extends Stage {
                 }
             }
         }
-        System.gc();
     }
 
         /*
@@ -66,7 +103,7 @@ public class CustomStage extends Stage {
         }
           */
 
-    public void moveMissiles(Integer counter, int range, List<Missile> missiles) {
+    private void moveMissiles(Integer counter, int range, List<Missile> missiles) {
         for (Actor a : this.getActors()) {
             if (a instanceof Missile) {
                 if (counter % 10 == 0) ((Missile) a).setWeight(GameScreen.calculateWeight(range));
@@ -98,10 +135,9 @@ public class CustomStage extends Stage {
             }
 
         }
-        System.gc();
     }
 
-    public void moveBullets(Integer counter, int range, List<Bullet> bullets) {
+    private void moveBullets(Integer counter, int range, List<Bullet> bullets) {
         for (Actor a : this.getActors()) {
             if (a instanceof Bullet) {
                 switch (((Bullet) a).getDirection()) {
@@ -127,17 +163,14 @@ public class CustomStage extends Stage {
                 }
             }
         }
-        System.gc();
-    }
-
-    @Override
-    public void addActor(Actor actor) {
-        if (actor instanceof Player) player = (Player) actor;
-        super.addActor(actor);
     }
 
     private float getRandomYVariation(Missile m, Integer counter) {
         return (float) ((Math.sin(counter * 0.1)) * m.getWeight());
+    }
+
+    private void calculateEnemies() {
+        GameScreen.numberOfEnemies = player.getScore() / 400;
     }
 
 }

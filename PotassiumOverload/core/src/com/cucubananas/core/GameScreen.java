@@ -17,25 +17,26 @@ import com.cucubananas.core.actor.Missile;
 import com.cucubananas.core.actor.MoveableObject;
 import com.cucubananas.core.actor.Player;
 
-import java.awt.*;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameScreen extends AbstractScreen {
 
+    protected static Integer randomisationCounter = 0;
+    protected static float missileHealth = 10f;
+    protected static int numberOfEnemies = 2;
+
     private CustomStage stage;
     private Player player;
     private List<Missile> missiles;
     private List<Bullet> bullets;
-    private int range, numberOfEnemies;
-    private static Integer counter = 0;
-    private static float missileHealth = 10f;
     private HealthBar hBar;
+    private int range;
 
     public GameScreen(PotassiumOverload game) {
         super(game);
-        stage = new CustomStage();
+        stage = new CustomStage(missiles, bullets);
         range = 10;
         missiles = new ArrayList<>();
         bullets = new ArrayList<>();
@@ -59,7 +60,7 @@ public class GameScreen extends AbstractScreen {
         stage.act(delta);
         stage.draw();
         hBar.draw();
-        calculateEnemies();
+        renderScore();
 
         while (missiles.size() < numberOfEnemies) {
             Missile m = createMissile();
@@ -89,40 +90,10 @@ public class GameScreen extends AbstractScreen {
             player.shoot();
         }
 
-        stage.moveMissiles(counter, range, missiles);
-        stage.moveBullets(counter, range, bullets);
+        // Updates game state and returns false if player health <= 0
+        if (!stage.updateGameState(randomisationCounter, range, bullets, missiles))
+            game.setScreen(new GameOverScreen(game, player.getScore()));
 
-        stage.updateHitboxes();
-
-        stage.checkPlayerToMissileCollision(missiles);
-        stage.checkBulletToMissileCollision(missiles, bullets);
-
-        advanceGame();
-
-        // TODO uncomment once Projectile and Collectibles are implemented
-    /*
-    stage.checkProjectilesCollision();
-    stage.checkCollectiblesCollision();
-     */
-
-    }
-//
-//    private void renderHealthBar() {
-//        Gdx.gl.glEnable(GL20.GL_BLEND);
-//        healthBarRenderer.setProjectionMatrix(camera.combined);
-//        healthBarRenderer.begin(ShapeRenderer.ShapeType.Filled);
-//        healthBarRenderer.setColor(new Color(0, 1, 0, 0.2f));
-//        healthBarRenderer.rect(hBar.xSrc, hBar.ySrc, hBar.width, hBar.height);
-//        healthBarRenderer.end();
-//        Gdx.gl.glDisable(GL20.GL_BLEND);
-//    }
-
-    private void advanceGame() {
-        counter++;
-        player.setScore(player.getScore() + 1);
-        missileHealth += 0.001;
-        renderScore();
-        if (hBar.updateHealth()) game.setScreen(new GameOverScreen(game, player.getScore()));
     }
 
     private void renderScore() {
@@ -163,10 +134,6 @@ public class GameScreen extends AbstractScreen {
         return (int) (random * range);
     }
 
-    private void calculateEnemies() {
-        numberOfEnemies = player.getScore() / 400;
-    }
-
     private static class HealthBar extends Actor {
         private Player player;
         private float width, height, greenWidth;
@@ -200,10 +167,8 @@ public class GameScreen extends AbstractScreen {
             Gdx.gl.glDisable(GL20.GL_BLEND);
         }
 
-        public boolean updateHealth() {
+        public void updateHealth() {
             greenWidth = player.getHealth();
-            if (player.getHealth() > 0) return false;
-            else return true;
         }
     }
 
