@@ -133,7 +133,7 @@ public class GameScreen extends AbstractScreen {
 
     private static class HealthBar extends Actor {
         private Player player;
-        private float width, height, greenWidth;
+        private float width, height;
         private ShapeRenderer hBarRenderer;
 
         public HealthBar(Player player) {
@@ -147,12 +147,10 @@ public class GameScreen extends AbstractScreen {
             width = Gdx.graphics.getWidth() - getX() * 2;
             // Y top coordinate
             height = 40f;
-            // Portion of bar to be rendered green and red
-            greenWidth = 100f;
         }
 
         public void draw() {
-            float boundary = width / 100 * greenWidth;
+            float boundary = width / 100 * player.getHealth();
             Gdx.gl.glEnable(GL20.GL_BLEND);
             hBarRenderer.setProjectionMatrix(getStage().getCamera().combined);
             hBarRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -162,10 +160,6 @@ public class GameScreen extends AbstractScreen {
             hBarRenderer.rect(Gdx.graphics.getWidth() - getX() - (width - boundary), getY(), width - boundary, height);
             hBarRenderer.end();
             Gdx.gl.glDisable(GL20.GL_BLEND);
-        }
-
-        public void updateHealth() {
-            greenWidth = player.getHealth();
         }
     }
 
