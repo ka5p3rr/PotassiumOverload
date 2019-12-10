@@ -38,7 +38,8 @@ public class CustomStage extends Stage {
         checkBulletToMissileCollision();
 
         disposeObjects();
-
+        if (player.getHealth() <= 0) return false;
+        
         // Increase score
         player.setScore(player.getScore() + 1);
 
@@ -52,8 +53,7 @@ public class CustomStage extends Stage {
         checkPlayerToCollectiblesCollision();
          */
 
-        if (player.getHealth() <= 0) return false;
-        else return true;
+        return true;
     }
 
     private void checkPlayerToMissileCollision() {
