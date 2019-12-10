@@ -39,7 +39,7 @@ public class CustomStage extends Stage {
 
         disposeObjects();
         if (player.getHealth() <= 0) return false;
-        
+
         // Increase score
         player.setScore(player.getScore() + 1);
 
@@ -71,7 +71,7 @@ public class CustomStage extends Stage {
                 m.setHealth(m.getHealth() - 10);
                 if (m.getHealth() <= 0) {
                     missilesToRemove.add(m);
-                    player.setScore(player.getScore() + 50);
+                    player.setScore(player.getScore() + 100);
                 }
                 bulletsToRemove.add(b);
             }
