@@ -21,7 +21,7 @@ public class Bullet extends Projectile {
 
     @Override
     public void draw(Batch batch, float alpha) {
-        batch.draw(texture, getX(), getY(), 13, 8, 0, 0, 50, 30, DIR_TO_ROTATION.get(xState), false);
+        batch.draw(texture, getX(), getY(), 13, 8, 0, 0, 50, 30, !DIR_TO_ROTATION.get(xState), false);
     }
 
 }
