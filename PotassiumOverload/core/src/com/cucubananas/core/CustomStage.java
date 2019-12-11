@@ -42,6 +42,11 @@ public class CustomStage extends Stage {
         // Increase score
         player.setScore(player.getScore() + 1);
 
+        // Increase randomisation time
+        GameScreen.randomisationTime++;
+        if(GameScreen.randomisationTime > 15)
+            GameScreen.randomisationTime = 5;
+
         // Make game harder by increasing randomisation factor, as well as the number of missiles and their health
         GameScreen.randomisationCounter++;
         GameScreen.missileHealth += 0.001;
@@ -90,7 +95,7 @@ public class CustomStage extends Stage {
 
     private void moveMissiles() {
         for (Missile a : missiles) {
-            if (GameScreen.randomisationCounter % 10 == 0)
+            if (GameScreen.randomisationCounter % a.getRandomisationTime() == 0)
                 a.setWeight(GameScreen.calculateWeight(GameScreen.randomisationRange));
             switch (a.getDirection()) {
                 case MoveableObject.FACING_DIRECTIONS_LEFT:

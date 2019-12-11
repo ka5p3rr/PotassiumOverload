@@ -24,6 +24,7 @@ public class GameScreen extends AbstractScreen {
     protected static int randomisationRange = 10;
     protected static float missileHealth = 10f;
     protected static int numberOfEnemies = 2;
+    protected static int randomisationTime = 5;
 
     private CustomStage stage;
     private Player player;
@@ -112,10 +113,10 @@ public class GameScreen extends AbstractScreen {
         double dir = new SecureRandom().nextDouble();
 
         if (dir < 0.5) {
-            missile = new Missile(0, getRandomYPos(), randomisationRange, missileHealth);
+            missile = new Missile(0, getRandomYPos(), randomisationRange, missileHealth, randomisationTime);
             missile.setDirection(MoveableObject.FACING_DIRECTIONS_RIGHT);
         } else {
-            missile = new Missile(Gdx.graphics.getWidth(), getRandomYPos(), randomisationRange, missileHealth);
+            missile = new Missile(Gdx.graphics.getWidth(), getRandomYPos(), randomisationRange, missileHealth, randomisationTime);
             missile.setDirection(MoveableObject.FACING_DIRECTIONS_LEFT);
         }
         return missile;
