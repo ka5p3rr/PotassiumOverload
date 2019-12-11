@@ -123,7 +123,7 @@ public class GameScreen extends AbstractScreen {
 
     private int getRandomYPos() {
         double random = new SecureRandom().nextDouble();
-        return (int) (random * Gdx.graphics.getWidth() + 1);
+        return (int) (random * Gdx.graphics.getHeight() + 1);
     }
 
     public static int calculateWeight(int range) {

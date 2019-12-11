@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.cucubananas.core.actor.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class CustomStage extends Stage {
@@ -140,7 +139,7 @@ public class CustomStage extends Stage {
     }
 
     private float getRandomYVariation(Missile m, Integer counter) {
-        return (float) ((Math.sin(counter * 0.1)) * m.getWeight());
+        return (float) ((Math.sin(counter * (0.1 / 2))) * m.getWeight());
     }
 
     private void calculateEnemies() {
