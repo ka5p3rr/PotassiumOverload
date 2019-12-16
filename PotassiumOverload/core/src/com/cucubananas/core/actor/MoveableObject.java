@@ -26,7 +26,7 @@ public abstract class MoveableObject extends Actor {
 
     protected static final Map<String, Boolean> DIR_TO_ROTATION = new HashMap<>();
     public static final String FACING_DIRECTIONS_LEFT = "LEFT";
-    public static final String FACING_DIRECTIONS_RIGHT = "FACING_DIRECTIONS_RIGHT";
+    public static final String FACING_DIRECTIONS_RIGHT = "RIGHT";
 
     static {
         DIR_TO_ROTATION.put(FACING_DIRECTIONS_LEFT, true);
@@ -51,6 +51,11 @@ public abstract class MoveableObject extends Actor {
         hitbox.height = texture.getHeight();
         setBounds(getX(), getY(), texture.getWidth(), texture.getHeight());
         this.setHealth(health);
+    }
+
+    @Override
+    public void act(float delta) {
+        updateHitbox();
     }
 
     @Override

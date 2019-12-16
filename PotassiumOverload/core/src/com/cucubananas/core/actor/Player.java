@@ -18,6 +18,7 @@ public class Player extends AnimatedMoveableObject {
   private static final int HEIGHT = 100;
   private static final float MOVEMENT = 4;
   private int shootingDuration = 0;
+  private int score = 0;
 
   public Player(float x, float y) {
     this(x, y, 100);
@@ -27,6 +28,7 @@ public class Player extends AnimatedMoveableObject {
     super("characterspritesheet.png", x, y, health, WIDTH, HEIGHT);
     xState = FACING_DIRECTIONS_RIGHT;
     yState = UP;
+    score = 200;
 
     spriteSheet.put(FACING_DIRECTIONS_RIGHT + DOWN, new TextureRegion(texture,0,0,WIDTH,HEIGHT));
     spriteSheet.put(FACING_DIRECTIONS_RIGHT + UP, new TextureRegion(texture,52,0,WIDTH,HEIGHT));
@@ -34,7 +36,7 @@ public class Player extends AnimatedMoveableObject {
     spriteSheet.put(FACING_DIRECTIONS_LEFT + DOWN, new TextureRegion(texture,0,100,WIDTH,HEIGHT));
     spriteSheet.put(FACING_DIRECTIONS_LEFT + UP, new TextureRegion(texture,52,100,WIDTH,HEIGHT));
     spriteSheet.put(FACING_DIRECTIONS_LEFT + SHOOTING, new TextureRegion(texture,108,100,WIDTH,HEIGHT));
-    setBounds(x,y,52,100);
+    setBounds(x, y,52,100);
   }
 
   @Override
@@ -93,5 +95,14 @@ public class Player extends AnimatedMoveableObject {
     else
       return getX() + 45;
   }
+
+  public int getScore() {
+    return score;
+  }
+
+  public void setScore(int score) {
+    this.score = score;
+  }
+
 
 }

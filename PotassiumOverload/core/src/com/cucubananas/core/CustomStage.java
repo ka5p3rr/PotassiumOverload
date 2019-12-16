@@ -3,40 +3,87 @@ package com.cucubananas.core;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.cucubananas.core.actor.Missile;
-import com.cucubananas.core.actor.MoveableObject;
-import com.cucubananas.core.actor.Player;
-import com.cucubananas.core.actor.Projectile;
+import com.cucubananas.core.actor.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomStage extends Stage {
-    Player player;
+    private List<Missile> missilesToRemove;
+    private List<Bullet> bulletsToRemove;
 
-    public void updateHitboxes() {
-        for (Actor a : this.getActors()) {
-            if (a instanceof MoveableObject) {
-                ((MoveableObject) a).updateHitbox();
+    private Player player;
+    private List<Missile> missiles;
+    private List<Bullet> bullets;
+
+    public CustomStage(List<Missile> missiles, List<Bullet> bullets) {
+        super();
+        this.missiles = missiles;
+        this.bullets = bullets;
+        missilesToRemove = new ArrayList<>();
+        bulletsToRemove = new ArrayList<>();
+    }
+
+    @Override
+    public void addActor(Actor actor) {
+        if (actor instanceof Player) player = (Player) actor;
+        super.addActor(actor);
+    }
+
+    public boolean updateGameState() {
+        moveMissiles();
+        moveBullets();
+        checkPlayerToMissileCollision();
+        checkBulletToMissileCollision();
+
+        disposeObjects();
+        if (player.getHealth() <= 0) return false;
+
+        // Increase score
+        player.setScore(player.getScore() + 1);
+
+        // Increase randomisation time
+        GameScreen.randomisationTime++;
+        if(GameScreen.randomisationTime > 15)
+            GameScreen.randomisationTime = 5;
+
+        // Make game harder by increasing randomisation factor, as well as the number of missiles and their health
+        GameScreen.randomisationCounter++;
+        GameScreen.missileHealth += 0.001;
+        calculateEnemies();
+
+        // TODO uncomment once Collectibles are implemented
+         /*
+        checkPlayerToCollectiblesCollision();
+         */
+
+        return true;
+    }
+
+    private void checkPlayerToMissileCollision() {
+        for (Missile a : missiles) {
+            if (player.checkCollision(a)) {
+                player.setHealth(player.getHealth() - 10);
+                missilesToRemove.add(a);
             }
         }
     }
 
-    public void checkMissileCollision(List<Missile> projectiles) {
-        for (Actor a : this.getActors()) {
-            if (a instanceof Missile) {
-                if(player.checkCollision((Missile) a)) {
-                    this.getRoot().removeActor(a);
-                    projectiles.remove(a);
+    private void checkBulletToMissileCollision() {
+        missiles.forEach(m -> bullets.forEach(b -> {
+            if (m.checkCollision(b)) {
+                m.setHealth(m.getHealth() - 10);
+                if (m.getHealth() <= 0) {
+                    missilesToRemove.add(m);
+                    player.setScore(player.getScore() + 100);
                 }
+                bulletsToRemove.add(b);
             }
-        }
+        }));
     }
 
         /*
         //TODO uncomment once Projectile and Collectibles are implemented
-
-
         public void checkCollectiblesCollision() {
             for (Actor a : this.getActors()) {
                 if (a instanceof Collectible) {
@@ -46,47 +93,78 @@ public class CustomStage extends Stage {
         }
           */
 
-    public void moveMissiles(Integer counter, int range, List<Missile> missiles) {
-        for (Actor a : this.getActors()) {
-            if (a instanceof Missile) {
-                if (counter % 10 == 0) ((Missile) a).setWeight(GameScreen.calculateWeight(range));
-                switch (((Projectile) a).getDirection()) {
-                    case MoveableObject.FACING_DIRECTIONS_LEFT:
-                        a.setX(a.getX() - 2);
-                        a.setY(a.getY() + getRandomYVariation((Missile) a, counter));
-                        if(a.getY() + ((Missile) a).getTextureHeight() >= Gdx.graphics.getHeight()) a.setY(((float) Gdx.graphics.getHeight()) - ((Missile) a).getTextureHeight());
-                        if(a.getY() <= 0) a.setY(0);
-                        if (a.getX() <= 0 || a.getX() >= Gdx.graphics.getWidth()) {
-                            this.getRoot().removeActor(a);
-                            missiles.remove(a);
-                        }
-
-                            break;
-                    case MoveableObject.FACING_DIRECTIONS_RIGHT:
-                        a.setX(a.getX() + 2);
-                        a.setY(a.getY() + getRandomYVariation((Missile) a, counter));
-                        if(a.getY() + ((Missile) a).getTextureHeight() >= Gdx.graphics.getHeight()) a.setY(((float) Gdx.graphics.getHeight())  - ((Missile) a).getTextureHeight());
-                        if(a.getY() <= 0) a.setY(0);
-                        if (a.getX() <= 0 || a.getX() >= Gdx.graphics.getWidth()) {
-                            this.getRoot().removeActor(a);
-                            missiles.remove(a);
-                        }
-                        break;
-                }
+    private void moveMissiles() {
+        for (Missile a : missiles) {
+            if (GameScreen.randomisationCounter % a.getRandomisationTime() == 0)
+                a.setWeight(GameScreen.calculateWeight(GameScreen.randomisationRange));
+            switch (a.getDirection()) {
+                case MoveableObject.FACING_DIRECTIONS_LEFT:
+                    a.setX(a.getX() - 2);
+                    a.setY(a.getY() + getRandomYVariation(a, GameScreen.randomisationCounter));
+                    if (a.getY() + a.getTextureHeight() >= Gdx.graphics.getHeight())
+                        a.setY(((float) Gdx.graphics.getHeight()) - a.getTextureHeight());
+                    if (a.getY() <= 0) a.setY(0);
+                    if (a.getX() <= 0 || a.getX() >= Gdx.graphics.getWidth()) {
+                        missilesToRemove.add(a);
+                    }
+                    break;
+                case MoveableObject.FACING_DIRECTIONS_RIGHT:
+                    a.setX(a.getX() + 2);
+                    a.setY(a.getY() + getRandomYVariation(a, GameScreen.randomisationCounter));
+                    if (a.getY() + a.getTextureHeight() >= Gdx.graphics.getHeight())
+                        a.setY(((float) Gdx.graphics.getHeight()) - a.getTextureHeight());
+                    if (a.getY() <= 0) a.setY(0);
+                    if (a.getX() <= 0 || a.getX() >= Gdx.graphics.getWidth()) {
+                        missilesToRemove.add(a);
+                    }
+                    break;
             }
-
         }
-        System.gc();
     }
 
-    @Override
-    public void addActor(Actor actor) {
-        if (actor instanceof Player) player = (Player) actor;
-        super.addActor(actor);
+    private void moveBullets() {
+        bullets.forEach(a -> {
+            switch (a.getDirection()) {
+                case MoveableObject.FACING_DIRECTIONS_LEFT:
+                    a.setX(a.getX() - Bullet.SPEED);
+                    if (a.getY() <= 0) a.setY(0);
+                    if (a.getX() <= 0 || a.getX() >= Gdx.graphics.getWidth()) {
+                        bulletsToRemove.add(a);
+                    }
+                    break;
+                case MoveableObject.FACING_DIRECTIONS_RIGHT:
+                    a.setX(a.getX() + Bullet.SPEED);
+                    if (a.getY() <= 0) a.setY(0);
+                    if (a.getX() <= 0 || a.getX() >= Gdx.graphics.getWidth()) {
+                        bulletsToRemove.add(a);
+                    }
+                    break;
+            }
+        });
     }
 
     private float getRandomYVariation(Missile m, Integer counter) {
-        return (float) ((Math.sin(counter * 0.1)) * m.getWeight());
+        return (float) ((Math.sin(counter * (0.1 / 2))) * m.getWeight());
     }
 
+    private void calculateEnemies() {
+        GameScreen.numberOfEnemies = player.getScore() / 400;
+    }
+
+    private void disposeObjects() {
+        missilesToRemove.forEach(m -> {
+            missiles.remove(m);
+            this.getRoot().removeActor(m);
+        });
+
+        bulletsToRemove.forEach(b -> {
+            bullets.remove(b);
+            this.getRoot().removeActor(b);
+        });
+
+        missilesToRemove.clear();
+        bulletsToRemove.clear();
+
+        System.gc();
+    }
 }
