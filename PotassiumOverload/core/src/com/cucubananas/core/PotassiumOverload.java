@@ -1,33 +1,35 @@
 package com.cucubananas.core;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.Game;
 
-public class PotassiumOverload extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
-	}
+public class PotassiumOverload extends Game {
 
-	@Override
-	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
-	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
-	}
+    @Override
+    public void create() {
+        MainMenuScreen menu = new MainMenuScreen(this);
+        this.setScreen(menu);
+    }
+
+    public enum GameState {
+        NEW_GAME, GAME_OVER, SAVE,  EXIT
+    }
+
+    public void changeScreen(GameState state){
+        switch(state){
+            case NEW_GAME:
+                this.setScreen(new GameScreen(this));
+                break;
+            case GAME_OVER:
+                this.setScreen(new GameOverScreen(this));
+                break;
+            case EXIT:
+                this.setScreen(new MainMenuScreen(this));
+                break;
+            case SAVE:
+                this.setScreen(new MainMenuScreen(this));
+                break;
+        }
+
+    }
+
 }

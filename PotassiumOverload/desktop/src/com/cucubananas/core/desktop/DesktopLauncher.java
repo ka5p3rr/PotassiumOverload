@@ -8,6 +8,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.forceExit = false;
+		config.width = 1440;
+		config.height = 720;
 		new LwjglApplication(new PotassiumOverload(), config);
 	}
 }
